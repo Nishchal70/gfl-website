@@ -186,3 +186,16 @@ Work Log:
 
 Stage Summary:
 - Mobile hero now mirrors the reference: split layout with copy on white left + art surfacing right + stacked CTAs; wording, colors, fonts and desktop all unchanged
+---
+Task ID: 13
+Agent: Main agent (Super Z)
+Task: Mobile hero — building centered, art slightly faded, bold text with white glow
+
+Work Log:
+- User: building ko center me daal do, halki si opacity kam, texts bold + light white shadow for clarity
+- Measured real geometry via agent-browser eval (band 390x600, cover) and re-measured building positions from rendered frames: buildings actually sit at ~65-75% of image width in ALL 7 artworks (earlier 50-62% estimates were wrong)
+- globals.css mobile block: .hero-art opacity 0.82; object-position 85% center (lands building at screen center across all images, variance ~+/-8%); removed the left white panel entirely (building must be visible centered); kept 600px art band + bottom fade; .hero-desc font-weight 700; light 3-layer white text-shadow on .hero-copy h1 + p (title, eyebrow, paragraph)
+- Verified: mobile 390x844 on random-1 (sky fortress) and random-3 (golden temple) — building centered behind copy, art subtly faded, all text crisp with glow; desktop 1280x800 unchanged; lint clean; 0 console errors
+
+Stage Summary:
+- Mobile hero = centered slightly-faded artwork with bold white-glow copy on top; desktop untouched
