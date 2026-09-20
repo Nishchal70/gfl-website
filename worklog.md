@@ -19,3 +19,18 @@ Stage Summary:
 - Demo staff creds: admin@gfl.gg / GFLstaff2026! (Admin), rep@gfl.gg / GFLrep2026! (Clan Rep)
 - Original repo preserved at /home/z/my-project/gfl-website for reference
 - Verification screenshots saved in /home/z/my-project/download/gfl-upgrade-*.png
+---
+Task ID: 2
+Agent: Main agent (Super Z)
+Task: Revert hero "GLOBAL FARMING LEAGUE" display font to the original Impact stack
+
+Work Log:
+- User feedback: hero heading looked worse than original after upgrade
+- Root cause: upgrade replaced the system Impact font stack with the Anton web font (always wins, even on devices that have Impact)
+- Reverted .brand-font/.display font-family to exact original stack: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif
+- Removed Anton import/variable from layout.tsx and --font-display from @theme; kept Inter for body (original also used Inter)
+- Lint clean, zero page errors; computed style of h1.display verified in browser
+
+Stage Summary:
+- Hero heading (and all display text) now renders identically to the original site on any device that has Impact
+- Note: sandbox Linux browser has no Impact installed, so sandbox screenshots show generic fallback; real user devices render Impact
