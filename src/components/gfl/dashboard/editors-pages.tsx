@@ -42,6 +42,11 @@ export function HowToJoinEditor() {
         value={draft.entryButtonLabel}
         onChange={(v) => set("entryButtonLabel", v)}
       />
+      <TextField
+        label="Entry BAND button link URL"
+        value={draft.entryButtonUrl}
+        onChange={(v) => set("entryButtonUrl", v)}
+      />
 
       <TextField
         label="Community card title"
@@ -55,9 +60,14 @@ export function HowToJoinEditor() {
         rows={3}
       />
       <TextField
-        label="Community button label (disabled)"
+        label="Community BAND button label"
         value={draft.communityButtonLabel}
         onChange={(v) => set("communityButtonLabel", v)}
+      />
+      <TextField
+        label="Community BAND button link URL"
+        value={draft.communityButtonUrl}
+        onChange={(v) => set("communityButtonUrl", v)}
       />
 
       <TextField

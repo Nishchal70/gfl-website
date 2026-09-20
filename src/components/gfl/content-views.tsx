@@ -5,8 +5,6 @@ import { SectionTitle } from "@/components/gfl/section-title";
 import { RichText } from "@/components/gfl/rich-text";
 import { useSiteContent } from "@/components/gfl/site-content-context";
 
-const ENTRY_URL = "https://band.us/@gflentry";
-
 export function OverviewView() {
   const overview = useSiteContent().overview;
   return (
@@ -42,7 +40,7 @@ export function HowToJoinView() {
                 className="mt-3 text-lg leading-8"
               />
               <a
-                href={ENTRY_URL}
+                href={c.entryButtonUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-block gfl-btn px-5 py-3 rounded-xl font-bold mt-5"
@@ -56,12 +54,14 @@ export function HowToJoinView() {
                 text={c.communityCardBody}
                 className="mt-3 text-lg leading-8"
               />
-              <button
-                disabled
-                className="mt-5 px-5 py-3 rounded-xl font-bold border border-stone-200 text-stone-400 cursor-not-allowed"
+              <a
+                href={c.communityButtonUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block px-5 py-3 rounded-xl font-bold mt-5 border border-red-200 text-red-700 hover:bg-red-50 hover:border-red-300 transition-colors"
               >
                 {c.communityButtonLabel}
-              </button>
+              </a>
             </div>
           </div>
 

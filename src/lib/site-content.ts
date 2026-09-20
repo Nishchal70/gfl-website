@@ -47,9 +47,11 @@ export const howToJoinSchema = z.object({
   entryCardTitle: z.string(),
   entryCardBody: z.string(),
   entryButtonLabel: z.string(),
+  entryButtonUrl: z.string(),
   communityCardTitle: z.string(),
   communityCardBody: z.string(),
   communityButtonLabel: z.string(),
+  communityButtonUrl: z.string(),
   requirementsTitle: z.string(),
   requirements: z.array(contentItemSchema).min(1),
   transitionTitle: z.string(),
@@ -155,10 +157,12 @@ export const DEFAULT_CONTENT: SiteContent = {
     entryCardBody:
       "If your clan has 50 members and is ready to join, this is your first stop. Join our Entry Lounge to speak directly with our onboarding team and submit your official application.",
     entryButtonLabel: "Join GFL Entry BAND",
+    entryButtonUrl: "https://band.us/@gflentry",
     communityCardTitle: "🌍 GFL Community BAND",
     communityCardBody:
       "Waiting for approval or just want to hang out? Jump into our massive Community Hub to chat with existing GFL leaders and get a feel for how our league operates.",
-    communityButtonLabel: "Official link coming soon",
+    communityButtonLabel: "Join GFL Community BAND",
+    communityButtonUrl: "https://band.us/@olclan",
     requirementsTitle: "Joining Requirements",
     requirements: [
       {

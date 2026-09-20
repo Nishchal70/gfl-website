@@ -66,3 +66,18 @@ Stage Summary:
 - Staff CMS dashboard is live at #staff after login
 - Editable: hero texts/CTAs/stats, about, chat, overview paragraphs, join cards/requirements/steps/security, battle mechanics/points, assistance items (add/remove), base layouts placeholder
 - Content stored as JSON overrides per page in SiteContent table; defaults ship in code
+---
+Task ID: 5
+Agent: Main agent (Super Z)
+Task: Set How to Join "GFL Community BAND" link to band.us/@olclan
+
+Work Log:
+- Community card previously rendered a disabled "Official link coming soon" button
+- site-content.ts: added entryButtonUrl (https://band.us/@gflentry) + communityButtonUrl (https://band.us/@olclan) to howToJoinSchema and defaults; label now "Join GFL Community BAND"
+- content-views.tsx: removed hardcoded ENTRY_URL const; both BAND buttons now render as real links from CMS content (community = outlined red secondary style)
+- editors-pages.tsx: added "Entry/Community BAND button link URL" TextFields so staff can change links from the dashboard
+- Verified: live page links correct (Entry -> @gflentry, Community -> @olclan), CMS save round-trip works with new fields (temp URL published live, then test override row deleted to restore pristine state), dashboard editor shows both URL fields, lint clean, 0 console/page errors
+
+Stage Summary:
+- Community BAND button on #how-to-join now links to https://band.us/@olclan
+- Both BAND URLs are staff-editable via the How to Join tab in the CMS dashboard
