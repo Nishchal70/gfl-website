@@ -247,6 +247,12 @@ export function BaseLayoutsEditor() {
         onChange={(v) => set("placeholderBody", v)}
         rows={3}
       />
+      <TextField
+        label="Media (GIF/image URL, empty = hidden)"
+        hint="File under /assets or a full URL, e.g. /assets/base-layouts-preview.gif"
+        value={draft.mediaSrc}
+        onChange={(v) => set("mediaSrc", v)}
+      />
       <EditorActions
         dirty={dirty}
         saving={saving}

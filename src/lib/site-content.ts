@@ -86,6 +86,8 @@ export const baseLayoutsSchema = z.object({
   subtitle: z.string(),
   placeholderTitle: z.string(),
   placeholderBody: z.string(),
+  /** Optional GIF/image shown on the page. Empty string hides the media. */
+  mediaSrc: z.string(),
 });
 export type BaseLayoutsContent = z.infer<typeof baseLayoutsSchema>;
 
@@ -265,7 +267,8 @@ export const DEFAULT_CONTENT: SiteContent = {
     subtitle: "Approved layouts will be provided here.",
     placeholderTitle: "Official GFL farming base layouts coming soon",
     placeholderBody:
-      "Add approved layout images or links here when they are available. This page intentionally does not display invented layouts.",
+      "Our approved farming base layouts are being prepared and will be published here as soon as they are ready. Stay tuned!",
+    mediaSrc: "/assets/base-layouts-preview.gif",
   },
 };
 

@@ -108,3 +108,20 @@ Work Log:
 Stage Summary:
 - "base layouts" in About Us now navigates to the Base Layouts page
 - Staff can add clickable internal/external links in any editable text via [label](target) syntax
+---
+Task ID: 8
+Agent: Main agent (Super Z)
+Task: Show user's uploaded WhatsApp video as GIF on the Base Layouts page (placeholder content)
+
+Work Log:
+- Uploaded file: WhatsApp Video 2026-09-21 at 12.52.05 AM.mp4 (640x360, 1.2s, 81KB) — CoC "UPGRADE IN PROGRESS" Barbarian King animation
+- Converted to optimized animated GIF via ffmpeg (palettegen/paletteuse, 10fps, 640w): public/assets/base-layouts-preview.gif (522KB)
+- baseLayoutsSchema: added mediaSrc string field (empty = hide media); default "/assets/base-layouts-preview.gif"
+- BaseLayoutsView: conditional render — media img (alt = placeholderTitle) when mediaSrc set, LayoutTemplate icon fallback otherwise
+- Updated default placeholderBody to visitor-appropriate copy (old text was editor-facing)
+- BaseLayoutsEditor: added "Media (GIF/image URL, empty = hidden)" TextField so staff can swap/remove the media via CMS
+- Removed unused eslint-disable directive; lint clean, 0 console errors, GIF loads (naturalWidth 640)
+
+Stage Summary:
+- Base Layouts page now displays the animated "Upgrade in Progress" GIF as themed placeholder
+- Media is CMS-editable: staff can change URL or empty it to restore icon-only placeholder when real layouts arrive

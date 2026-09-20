@@ -157,12 +157,22 @@ export function BaseLayoutsView() {
     <main className="grid-bg py-20">
       <div className="max-w-4xl mx-auto px-5">
         <SectionTitle sub={c.subtitle}>{c.title}</SectionTitle>
-        <div className="gfl-card p-10 md:p-14 text-center border-2 border-dashed border-stone-300">
-          <LayoutTemplate
-            className="h-12 w-12 mx-auto text-red-300"
-            aria-hidden="true"
-          />
-          <p className="mt-4 font-bold text-red-700 text-lg">
+        <div className="gfl-card p-7 md:p-10 text-center border-2 border-dashed border-stone-300">
+          {c.mediaSrc ? (
+            <img
+              src={c.mediaSrc}
+              alt={c.placeholderTitle}
+              width={640}
+              height={360}
+              className="mx-auto w-full max-w-2xl rounded-xl border border-stone-200"
+            />
+          ) : (
+            <LayoutTemplate
+              className="h-12 w-12 mx-auto text-red-300"
+              aria-hidden="true"
+            />
+          )}
+          <p className="mt-5 font-bold text-red-700 text-lg">
             {c.placeholderTitle}
           </p>
           <RichText
