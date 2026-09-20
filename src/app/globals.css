@@ -388,6 +388,11 @@ section .gfl-card:nth-child(2) {
   .hero-art img {
     object-position: 80% center;
   }
+  /* The three stacked words need a little air below each one on phones;
+     desktop keeps its tight poster leading. */
+  .hero-copy h1 {
+    line-height: 1.1;
+  }
   .hero::before {
     content: "";
     position: absolute;
@@ -395,16 +400,16 @@ section .gfl-card:nth-child(2) {
     inset: 0;
     background: linear-gradient(
       90deg,
-      rgba(255, 253, 252, 0.97) 0%,
-      rgba(255, 253, 252, 0.92) 30%,
-      rgba(255, 253, 252, 0.55) 55%,
-      rgba(255, 253, 252, 0.12) 75%,
+      rgba(255, 253, 252, 0.82) 0%,
+      rgba(255, 253, 252, 0.68) 30%,
+      rgba(255, 253, 252, 0.32) 55%,
+      rgba(255, 253, 252, 0.05) 75%,
       rgba(255, 253, 252, 0) 92%
     );
     pointer-events: none;
   }
-  /* Soft white cloud behind the copy block so the dark text stays readable
-     wherever it overlaps the artwork, while the art stays crisp around it. */
+  /* Light white veil only — the artwork (building) must stay clearly
+     visible; readability of the copy is handled by per-text halos. */
   .hero .hero-copy-wrap::before {
     content: "";
     position: absolute;
@@ -412,11 +417,19 @@ section .gfl-card:nth-child(2) {
     z-index: -1;
     background: radial-gradient(
       ellipse 80% 62% at 40% 46%,
-      rgba(255, 253, 252, 0.96) 0%,
-      rgba(255, 253, 252, 0.8) 52%,
-      rgba(255, 253, 252, 0.35) 78%,
+      rgba(255, 253, 252, 0.55) 0%,
+      rgba(255, 253, 252, 0.35) 52%,
+      rgba(255, 253, 252, 0.12) 78%,
       rgba(255, 253, 252, 0) 100%
     );
     pointer-events: none;
+  }
+  /* Soft white glow behind the paragraph text: keeps it readable over the
+     building while letting the art show through behind it. */
+  .hero-copy .hero-desc {
+    text-shadow:
+      0 1px 2px rgba(255, 255, 255, 0.95),
+      0 0 7px rgba(255, 253, 252, 0.85),
+      0 0 16px rgba(255, 253, 252, 0.6);
   }
 }

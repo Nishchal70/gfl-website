@@ -37,7 +37,7 @@ function Hero({ onNavigate }: { onNavigate: (page: PageId) => void }) {
             <br />
             <span className="text-zinc-950">{home.heroLine3}</span>
           </h1>
-          <p className="mt-8 max-w-lg text-lg md:text-xl leading-relaxed">
+          <p className="hero-desc mt-8 max-w-lg text-lg md:text-xl leading-relaxed">
             {home.heroDescription}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">

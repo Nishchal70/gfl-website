@@ -156,3 +156,18 @@ Work Log:
 Stage Summary:
 - Mobile hero is desktop-style again (art behind text, building visible right, white scrim/glow for legibility)
 - Heading font now looks the same on phones as on desktop (real Impact where available, Anton web fallback only where Impact is missing)
+---
+Task ID: 11
+Agent: Main agent (Super Z)
+Task: Mobile hero polish — title word spacing, lighter white overlays, white halo behind description
+
+Work Log:
+- User: title words need a little space below each on mobile; reduce opacity of the white scrims hiding the building; put a light white text-shadow behind the "Unlock the ultimate..." paragraph so art stays visible AND text readable
+- globals.css mobile block: added .hero-copy h1 { line-height: 1.1 } (desktop keeps its tight leading-[0.86]); scrim gradient alphas 0.97/0.92/0.55/0.12 -> 0.82/0.68/0.32/0.05; radial veil 0.96/0.8/0.35 -> 0.55/0.35/0.12; added .hero-copy .hero-desc { text-shadow: 3-layer soft white glow }
+- home-view.tsx: added hero-desc class to the description paragraph (shadow scoped to mobile media query only)
+- Dev server restart required again (Turbopack globals.css HMR); also learned server needs setsid to survive shell exit
+- agent-browser gotchas: viewport must be set via `set viewport W H` (open --viewport flag silently ignored); screenshot right after navigation can race next/image decode -> wait ~2s before shooting
+- Verified: mobile 390x844 across random images 1/2/5 (incl. the golden-building art from user's screenshot) — words spaced, building visible, paragraph readable; desktop 1280x800 unchanged (no line-height/halo leak); lint clean; 0 console/page errors
+
+Stage Summary:
+- Mobile hero matches desktop composition with better art visibility and airy title spacing; description uses per-glyph white halo instead of heavy white cloud
