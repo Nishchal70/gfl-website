@@ -29,7 +29,7 @@ export default function HeroArt() {
       fill
       priority
       sizes="100vw"
-      style={{ objectFit: "cover", objectPosition: "center" }}
+      style={{ objectFit: "cover" }}
     />
   );
 }

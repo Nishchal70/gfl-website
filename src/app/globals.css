@@ -144,7 +144,8 @@ body {
 
 .brand-font,
 .display {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: "GFL Display", Impact, Haettenschweiler, "Arial Narrow Bold",
+    sans-serif;
 }
 
 .brand-font {
@@ -204,6 +205,11 @@ body {
   min-height: 660px;
   background: #fff;
   isolation: isolate;
+}
+
+.hero .hero-copy-wrap {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-art {
@@ -352,28 +358,65 @@ section .gfl-card:nth-child(2) {
   }
 }
 
-/* Mobile hero: stack the copy above the artwork so the full image stays
-   visible (3:2 container matches the artwork's aspect ratio = no crop)
-   instead of the washed-out background crop from the original site. */
+/* Display typeface: use the device's real Impact whenever it is installed
+   (Windows / macOS / iOS -> identical rendering to the original site).
+   Devices without Impact (most Androids) download the closest Impact-style
+   web font so the headings look the same everywhere. */
+@font-face {
+  font-family: "GFL Display";
+  src:
+    local("Impact"),
+    local("Haettenschweiler"),
+    local("Arial Narrow Bold"),
+    url("/fonts/anton-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mobile hero: keep the desktop-style composition (copy over artwork).
+   The crop is anchored on the artwork's building and a soft white scrim on
+   the left keeps the copy readable, mirroring the artwork's own foggy left
+   side on wide screens. */
 @media (max-width: 767px) {
   .hero {
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .hero .hero-copy-wrap {
-    order: 1;
-    padding-top: 3.5rem;
-    padding-bottom: 2.75rem;
+    min-height: 640px;
   }
   .hero-art {
-    position: relative;
-    inset: auto;
-    order: 2;
     opacity: 1;
-    aspect-ratio: 3 / 2;
   }
-  .hero::after {
-    height: 80px;
+  .hero-art img {
+    object-position: 80% center;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 253, 252, 0.97) 0%,
+      rgba(255, 253, 252, 0.92) 30%,
+      rgba(255, 253, 252, 0.55) 55%,
+      rgba(255, 253, 252, 0.12) 75%,
+      rgba(255, 253, 252, 0) 92%
+    );
+    pointer-events: none;
+  }
+  /* Soft white cloud behind the copy block so the dark text stays readable
+     wherever it overlaps the artwork, while the art stays crisp around it. */
+  .hero .hero-copy-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -3.5rem -2.5rem;
+    z-index: -1;
+    background: radial-gradient(
+      ellipse 80% 62% at 40% 46%,
+      rgba(255, 253, 252, 0.96) 0%,
+      rgba(255, 253, 252, 0.8) 52%,
+      rgba(255, 253, 252, 0.35) 78%,
+      rgba(255, 253, 252, 0) 100%
+    );
+    pointer-events: none;
   }
 }

@@ -139,3 +139,20 @@ Work Log:
 
 Stage Summary:
 - Phone hero: text on clean white, full artwork below it (no crop, no washout); desktop hero pixel-identical to before
+---
+Task ID: 10
+Agent: Main agent (Super Z)
+Task: Put hero art back BEHIND the copy on phones (desktop-style) + match heading font to desktop
+
+Work Log:
+- User rejected the stacked layout: wanted art behind "GLOBAL FARMING LEAGUE" like desktop, and the same font on phone as desktop
+- Reverted stacked CSS; mobile (<768px) now keeps absolute background art at full opacity with object-position 80% center (anchors the crop on the building) + horizontal white scrim + radial white glow behind .hero-copy-wrap (z-index:-1 inside its z-2 context) so dark text stays readable over the art
+- Added global .hero .hero-copy-wrap { position:relative; z-index:2 } (mirrors original site) so copy paints above scrim/::after
+- Font: Android has no Impact (fell back to generic sans). Added @font-face "GFL Display" with src local(Impact)/local(Haettenschweiler)/local(Arial Narrow Bold) then url(/fonts/anton-latin.woff2) — devices with Impact keep rendering real Impact (desktop unchanged, user's earlier Anton objection was about Anton REPLACING Impact); Impact-less devices download Anton (18.6KB, closest Impact style). .brand-font/.display now use "GFL Display" first; preload link added in layout.tsx <head>
+- Removed inline objectPosition from hero-art.tsx (inline style would beat the media query)
+- HMR gotcha again: restarted server after CSS edits
+- Verified: mobile 390x844 shows art behind copy with readable text across two different random images; desktop 1280x800 unchanged; computed h1 font-family = "GFL Display", Impact, ...; font served 200/18612B; lint clean; 0 console/page errors
+
+Stage Summary:
+- Mobile hero is desktop-style again (art behind text, building visible right, white scrim/glow for legibility)
+- Heading font now looks the same on phones as on desktop (real Impact where available, Anton web fallback only where Impact is missing)
