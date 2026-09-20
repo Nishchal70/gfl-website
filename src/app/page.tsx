@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Header } from "@/components/gfl/header";
 import { Footer } from "@/components/gfl/footer";
 import { HomeView } from "@/components/gfl/home-view";
+import { SiteContentProvider } from "@/components/gfl/site-content-context";
 import {
   OverviewView,
   HowToJoinView,
@@ -48,20 +49,22 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <Header page={page} onNavigate={navigate} />
-      <div className="flex-1" key={page}>
-        <div className="view-enter">
-          {page === "home" && <HomeView onNavigate={navigate} />}
-          {page === "overview" && <OverviewView />}
-          {page === "how-to-join" && <HowToJoinView />}
-          {page === "battle-style" && <BattleStyleView />}
-          {page === "assistance" && <AssistanceView />}
-          {page === "base-layouts" && <BaseLayoutsView />}
-          {page === "staff" && <StaffView />}
+    <SiteContentProvider>
+      <div className="min-h-screen flex flex-col bg-white">
+        <Header page={page} onNavigate={navigate} />
+        <div className="flex-1" key={page}>
+          <div className="view-enter">
+            {page === "home" && <HomeView onNavigate={navigate} />}
+            {page === "overview" && <OverviewView />}
+            {page === "how-to-join" && <HowToJoinView />}
+            {page === "battle-style" && <BattleStyleView />}
+            {page === "assistance" && <AssistanceView />}
+            {page === "base-layouts" && <BaseLayoutsView />}
+            {page === "staff" && <StaffView />}
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </SiteContentProvider>
   );
 }

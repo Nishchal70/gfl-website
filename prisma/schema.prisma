@@ -20,10 +20,17 @@ model StaffMember {
 }
 
 model StaffSession {
-  id        String   @id @default(cuid())
-  token     String   @unique
+  id        String      @id @default(cuid())
+  token     String      @unique
   staffId   String
   staff     StaffMember @relation(fields: [staffId], references: [id], onDelete: Cascade)
   expiresAt DateTime
-  createdAt DateTime @default(now())
+  createdAt DateTime    @default(now())
+}
+
+model SiteContent {
+  key       String   @id
+  data      String
+  updatedBy String?
+  updatedAt DateTime @updatedAt
 }

@@ -47,3 +47,22 @@ Work Log:
 Stage Summary:
 - Staff can now sign in at #staff with nishchal708@gmail.com / discodeewane
 - Login card still displays the two original demo accounts as hints (flagged to user for removal)
+---
+Task ID: 4
+Agent: Main agent (Super Z)
+Task: CMS dashboard - staff can edit all website page content after login
+
+Work Log:
+- Prisma SiteContent model (key/data JSON/updatedBy), db pushed
+- src/lib/site-content.ts: zod schemas per page, DEFAULT_CONTENT (full original copy), mergeContent
+- APIs: GET /api/content (public), PUT /api/admin/content (auth + zod validated upsert)
+- SiteContentProvider/useSiteContent/useSiteContentUpdater; RichText renderer (**bold**, __accent__, \n\n)
+- 6 tabbed editors (Home/Overview/How to Join/Battle Style/Assistance/Base Layouts) with list editors, dirty tracking, Save & publish, Reset to original
+- Views consume context; changes go live instantly after save
+- DEBUGGING: dev server restart saga (prisma client regen needed restart; killed processes caused 500s); root cause of 500 was API misuse - components destructured {home} from context value {content, applySaved}. Fixed by making useSiteContent() return content directly + useSiteContentUpdater() for applySaved. Restart procedure: pkill next; rm -rf .next; nohup bash .zscripts/dev.sh >>dev.log (init-style launch survives)
+- Browser verified: login -> dashboard tabs -> edit hero eyebrow -> Save & publish toast -> live on homepage -> persists after reload -> Reset to original + publish restores defaults; Assistance view renders; 0 console errors; lint clean
+
+Stage Summary:
+- Staff CMS dashboard is live at #staff after login
+- Editable: hero texts/CTAs/stats, about, chat, overview paragraphs, join cards/requirements/steps/security, battle mechanics/points, assistance items (add/remove), base layouts placeholder
+- Content stored as JSON overrides per page in SiteContent table; defaults ship in code
