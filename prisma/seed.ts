@@ -5,6 +5,13 @@ const db = new PrismaClient()
 
 const STAFF_SEED = [
   {
+    email: 'nishchal708@gmail.com',
+    password: 'discodeewane',
+    name: 'Nishchal',
+    role: 'Admin',
+    clanName: 'Global Farming League',
+  },
+  {
     email: 'admin@gfl.gg',
     password: 'GFLstaff2026!',
     name: 'GFL Admin',

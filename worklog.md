@@ -34,3 +34,16 @@ Work Log:
 Stage Summary:
 - Hero heading (and all display text) now renders identically to the original site on any device that has Impact
 - Note: sandbox Linux browser has no Impact installed, so sandbox screenshots show generic fallback; real user devices render Impact
+---
+Task ID: 3
+Agent: Main agent (Super Z)
+Task: Create staff credentials for nishchal708@gmail.com
+
+Work Log:
+- Added account to prisma/seed.ts (name: Nishchal, role: Admin, clan: Global Farming League)
+- Re-ran seed (idempotent upserts) - account created with bcrypt-hashed password
+- Verified via live API: correct creds -> 200 + session, wrong password -> 401
+
+Stage Summary:
+- Staff can now sign in at #staff with nishchal708@gmail.com / discodeewane
+- Login card still displays the two original demo accounts as hints (flagged to user for removal)
