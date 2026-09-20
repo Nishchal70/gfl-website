@@ -25,7 +25,7 @@ function Hero({ onNavigate }: { onNavigate: (page: PageId) => void }) {
       <div className="hero-art" aria-hidden="true">
         <HeroArt />
       </div>
-      <div className="max-w-6xl mx-auto px-5 pt-24 pb-32 relative">
+      <div className="hero-copy-wrap max-w-6xl mx-auto px-5 pt-24 pb-32 relative">
         <div className="max-w-xl hero-copy">
           <p className="font-bold tracking-[0.25em] text-red-700 text-sm">
             {home.heroEyebrow}

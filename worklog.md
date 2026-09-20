@@ -125,3 +125,17 @@ Work Log:
 Stage Summary:
 - Base Layouts page now displays the animated "Upgrade in Progress" GIF as themed placeholder
 - Media is CMS-editable: staff can change URL or empty it to restore icon-only placeholder when real layouts arrive
+---
+Task ID: 9
+Agent: Main agent (Super Z)
+Task: Fix hero section on phones (image cropped/washed out vs desktop)
+
+Work Log:
+- Root cause: hero images are 1536x1024 (3:2); mobile kept the original site's rules (min-height 650 + object-fit cover + opacity .58) -> ~40% horizontal crop + ghost washout
+- globals.css: replaced the max-width:700px block with a max-width:767px stacked layout — .hero becomes flex column, copy first, .hero-art relative below with aspect-ratio 3/2 (= phone width / 1.5, so the ENTIRE image is visible, zero crop), washout opacity removed, bottom fade shortened to 80px
+- home-view.tsx: added hero-copy-wrap class to the copy wrapper for the padding/order overrides (desktop untouched)
+- Gotcha hit: Turbopack did not hot-recompile globals.css (compiled.css had no new rules); fixed via documented restart procedure (pkill next; rm -rf .next; nohup bash .zscripts/dev.sh >>dev.log)
+- Verified: mobile 390x844 stacked hero with full image (container ratio exactly 1.500), desktop 1280x800 unchanged, mobile hamburger menu works, lint clean, 0 console/page errors
+
+Stage Summary:
+- Phone hero: text on clean white, full artwork below it (no crop, no washout); desktop hero pixel-identical to before
