@@ -81,3 +81,15 @@ Work Log:
 Stage Summary:
 - Community BAND button on #how-to-join now links to https://band.us/@olclan
 - Both BAND URLs are staff-editable via the How to Join tab in the CMS dashboard
+---
+Task ID: 6
+Agent: Main agent (Super Z)
+Task: Match Community BAND button styling to Entry BAND button (user: "exact usi tarah")
+
+Work Log:
+- User feedback: outlined secondary style on Community BAND button should look exactly like the Entry BAND button
+- content-views.tsx: replaced custom outlined classes with identical gfl-btn classes (inline-block gfl-btn px-5 py-3 rounded-xl font-bold mt-5)
+- Verified in browser: both anchors share identical className, both render solid red buttons, hrefs @gflentry / @olclan intact; lint clean, 0 page errors
+
+Stage Summary:
+- Entry and Community BAND buttons are now visually identical solid red gfl-btn style

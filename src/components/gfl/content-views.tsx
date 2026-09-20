@@ -58,7 +58,7 @@ export function HowToJoinView() {
                 href={c.communityButtonUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block px-5 py-3 rounded-xl font-bold mt-5 border border-red-200 text-red-700 hover:bg-red-50 hover:border-red-300 transition-colors"
+                className="inline-block gfl-btn px-5 py-3 rounded-xl font-bold mt-5"
               >
                 {c.communityButtonLabel}
               </a>
