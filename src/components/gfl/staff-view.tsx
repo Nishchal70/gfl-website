@@ -191,7 +191,8 @@ function Dashboard({ staff, onLogout }: { staff: Staff; onLogout: () => void }) 
         Edit the content of any page below, then press{" "}
         <b>Save &amp; publish</b> — changes go live immediately for every
         visitor. Rich text: <code className="bg-stone-100 rounded px-1">**bold**</code>,{" "}
-        <code className="bg-stone-100 rounded px-1">__red underline__</code>,
+        <code className="bg-stone-100 rounded px-1">__red underline__</code>,{" "}
+        <code className="bg-stone-100 rounded px-1">[link text](#base-layouts)</code>,
         blank line for a new paragraph.
       </p>
 

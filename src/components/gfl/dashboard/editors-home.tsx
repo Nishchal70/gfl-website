@@ -92,7 +92,7 @@ export function HomeEditor() {
       />
       <TextAreaField
         label="About body"
-        hint="Rich text: **bold**, __red underlined__, blank line = new paragraph."
+        hint="Rich text: **bold**, __red underlined__, [link text](#base-layouts), blank line = new paragraph."
         value={draft.aboutBody}
         onChange={(v) => set("aboutBody", v)}
         rows={8}

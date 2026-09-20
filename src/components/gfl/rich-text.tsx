@@ -1,13 +1,34 @@
 /**
  * Tiny rich-text renderer for editable content.
- * Supports: **bold**, __red underlined accent__, \n line breaks,
- * and blank lines (\n\n) for paragraph breaks.
+ * Supports: **bold**, __red underlined accent__, [link text](target),
+ * \n line breaks, and blank lines (\n\n) for paragraph breaks.
+ * Link targets starting with # navigate within the site (e.g. #base-layouts);
+ * other targets open in a new tab.
  */
 
+const INLINE_PATTERN = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|__[^_]+__)/g;
+
 function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
-  const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__)/g);
+  const parts = text.split(INLINE_PATTERN);
   return parts.map((part, i) => {
     const key = `${keyPrefix}-${i}`;
+    if (part.startsWith("[") && part.endsWith(")")) {
+      const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (link) {
+        const [, label, target] = link;
+        const internal = target.startsWith("#");
+        return (
+          <a
+            key={key}
+            href={target}
+            {...(internal ? {} : { target: "_blank", rel: "noreferrer" })}
+            className="text-red-700 underline font-bold hover:text-red-800 transition-colors cursor-pointer"
+          >
+            {label}
+          </a>
+        );
+      }
+    }
     if (part.startsWith("**") && part.endsWith("**") && part.length > 4) {
       return <b key={key}>{part.slice(2, -2)}</b>;
     }

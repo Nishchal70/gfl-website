@@ -93,3 +93,18 @@ Work Log:
 
 Stage Summary:
 - Entry and Community BAND buttons are now visually identical solid red gfl-btn style
+---
+Task ID: 7
+Agent: Main agent (Super Z)
+Task: About Us "base layouts" text should click-navigate to the Base Layouts page
+
+Work Log:
+- rich-text.tsx: added [link text](target) syntax to the rich-text renderer; internal targets (#base-layouts) navigate in-site via hashchange, external open in new tab; link style = red-700 underline bold (matches accent look) with hover
+- site-content.ts: default aboutBody now uses [base layouts](#base-layouts) instead of __base layouts__
+- Deleted stale home override row from SiteContent (old aboutBody would have masked the new default); overrides table now empty
+- Updated rich-text hints in staff-view dashboard intro and editors-home About body field to document the link syntax
+- Verified: link present in About section, click -> #base-layouts view switch, browser back/forward intact, lint clean, 0 console errors
+
+Stage Summary:
+- "base layouts" in About Us now navigates to the Base Layouts page
+- Staff can add clickable internal/external links in any editable text via [label](target) syntax
