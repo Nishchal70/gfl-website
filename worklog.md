@@ -171,3 +171,18 @@ Work Log:
 
 Stage Summary:
 - Mobile hero matches desktop composition with better art visibility and airy title spacing; description uses per-glyph white halo instead of heavy white cloud
+---
+Task ID: 12
+Agent: Main agent (Super Z)
+Task: Mobile hero redesign to reference layout — text left on white, art surfacing right (desktop untouched)
+
+Work Log:
+- User sent the original-site mobile mockup as reference: copy column on clean white left, artwork emerging on the right, buttons stacked vertically; explicitly said do NOT change the text, keep desktop untouched
+- Inspected all 7 hero images: every one shares the same template (white foggy left third, building center-right ~55-65% image width) -> one global crop works
+- globals.css mobile block rewritten: .hero-art capped (inset 0 0 auto 0, height min(72%,600px)) so the 3:2 art stops being blown up by the tall copy column; .hero-art::after 90px bottom fade melts art into white; img object-position 50% center lands the building right-of-center; .hero::before is now a solid-white-left panel (#fffdfc solid to 48%, fades to 0 by 78%) that blends with each image's own fog; removed the radial veil entirely
+- Copy constrained like the reference: .hero .hero-copy max-width 62%, h1 2.75rem (line-height 1.1 kept), .hero-desc 1.0625rem with the white halo kept as safety net; buttons auto-stack because of the narrow column (matches reference)
+- Iteration v1 (full-height art) had the building cropped off the right edge because hero grew to ~870px -> art-band cap fixed it (v2)
+- Verified: mobile 390x844 on random-1/4/5-style art — text never overlaps art, building clearly visible right, stacked buttons; desktop 1280x800 pixel-identical; lint clean; 0 console errors
+
+Stage Summary:
+- Mobile hero now mirrors the reference: split layout with copy on white left + art surfacing right + stacked CTAs; wording, colors, fonts and desktop all unchanged
