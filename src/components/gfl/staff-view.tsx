@@ -24,6 +24,9 @@ import {
   BattleStyleEditor,
   HowToJoinEditor,
 } from "@/components/gfl/dashboard/editors-pages";
+import { TeamManager } from "@/components/gfl/dashboard/team-manager";
+import { AccountSettings } from "@/components/gfl/dashboard/account-settings";
+import { isCreator } from "@/lib/staff-roles";
 
 type Staff = {
   email: string;
@@ -138,8 +141,7 @@ function LoginCard({ onSuccess }: { onSuccess: (staff: Staff) => void }) {
       </form>
 
       <p className="mt-5 text-xs text-zinc-500 text-center">
-        Demo accounts — <b>admin@gfl.gg / GFLstaff2026!</b> or{" "}
-        <b>rep@gfl.gg / GFLrep2026!</b>
+        Demo admin account — <b>admin@gfl.gg / GFLstaff2026!</b>
       </p>
     </div>
   );
@@ -156,10 +158,17 @@ function Dashboard({ staff, onLogout }: { staff: Staff; onLogout: () => void }) 
           <h3 className="display text-3xl mt-1">{staff.name}</h3>
           <p className="text-sm text-zinc-600 mt-1 flex items-center gap-2 flex-wrap">
             {staff.email}
-            <Badge className="bg-red-50 text-red-700 border border-red-100 hover:bg-red-100">
-              <ShieldCheck className="h-3.5 w-3.5 mr-1" aria-hidden="true" />
-              {staff.role}
-            </Badge>
+            {isCreator(staff.role) ? (
+              <Badge className="bg-red-600 text-white border border-red-600 hover:bg-red-700">
+                <ShieldCheck className="h-3.5 w-3.5 mr-1" aria-hidden="true" />
+                Creator
+              </Badge>
+            ) : (
+              <Badge className="bg-stone-100 text-zinc-700 border border-stone-200 hover:bg-stone-200">
+                <ShieldCheck className="h-3.5 w-3.5 mr-1" aria-hidden="true" />
+                {staff.role}
+              </Badge>
+            )}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -207,6 +216,20 @@ function Dashboard({ staff, onLogout }: { staff: Staff; onLogout: () => void }) 
               {tab.label}
             </TabsTrigger>
           ))}
+          {isCreator(staff.role) && (
+            <TabsTrigger
+              value="team"
+              className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-red-700 data-[state=active]:shadow-sm"
+            >
+              Team
+            </TabsTrigger>
+          )}
+          <TabsTrigger
+            value="account"
+            className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-red-700 data-[state=active]:shadow-sm"
+          >
+            Account
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="home" className="mt-6">
           <HomeEditor />
@@ -225,6 +248,14 @@ function Dashboard({ staff, onLogout }: { staff: Staff; onLogout: () => void }) 
         </TabsContent>
         <TabsContent value="base-layouts" className="mt-6">
           <BaseLayoutsEditor />
+        </TabsContent>
+        {isCreator(staff.role) && (
+          <TabsContent value="team" className="mt-6">
+            <TeamManager selfEmail={staff.email} />
+          </TabsContent>
+        )}
+        <TabsContent value="account" className="mt-6">
+          <AccountSettings role={staff.role} />
         </TabsContent>
       </Tabs>
     </div>

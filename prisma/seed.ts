@@ -8,7 +8,7 @@ const STAFF_SEED = [
     email: 'nishchal708@gmail.com',
     password: 'discodeewane',
     name: 'Nishchal',
-    role: 'Admin',
+    role: 'Creator',
     clanName: 'Global Farming League',
   },
   {
@@ -17,13 +17,6 @@ const STAFF_SEED = [
     name: 'GFL Admin',
     role: 'Admin',
     clanName: 'Global Farming League',
-  },
-  {
-    email: 'rep@gfl.gg',
-    password: 'GFLrep2026!',
-    name: 'War Rep',
-    role: 'Clan Representative',
-    clanName: 'Farm Squad One',
   },
 ]
 

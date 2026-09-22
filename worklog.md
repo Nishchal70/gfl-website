@@ -199,3 +199,17 @@ Work Log:
 
 Stage Summary:
 - Mobile hero = centered slightly-faded artwork with bold white-glow copy on top; desktop untouched
+---
+Task ID: 14
+Agent: Main agent (Super Z)
+Task: Staff roles — Creator (Nishchal) + Admin; creator-only team management; self-service password change
+
+Work Log:
+- Roles restricted to Creator + Admin: new src/lib/staff-roles.ts (shared client/server constants); prisma/seed.ts now seeds nishchal708@gmail.com as Creator, admin@gfl.gg as Admin, rep removed; one-off scripts/update-staff-roles.ts migrated the live DB (Nishchal->Creator, deleted the Clan Representative demo account, sessions cascade)
+- New APIs: POST /api/staff/password (any signed-in member changes OWN password, verifies current); GET+POST /api/staff/manage and PATCH+DELETE /api/staff/manage/[id] (Creator only) — create profiles, edit name/email/role/clan/password reset, remove members. Guards: cannot change own role, cannot delete self, cannot demote/delete the last Creator, email uniqueness, password min 8, 403 for non-creator
+- UI: dashboard now has a Team tab (creator only — roster with role badges, Add staff member dialog, Edit dialog incl. optional password reset, Remove with confirm) and an Account tab (everyone — change own password); Creator badge rendered filled red; login demo hint trimmed to admin@gfl.gg only (rep account no longer exists)
+- Content editing unchanged: both roles keep full page editors (PUT /api/admin/content stays auth-only)
+- E2E verified in browser: Nishchal login shows Creator badge + Team/Account tabs; created Temp Tester admin via UI; admin login shows NO Team tab and 403 on manage GET/POST; own-password change works (old pw 401, new 200); creator self-role/self-delete blocked (400); temp account removed via API (roster back to GFL Admin + Nishchal); lint clean; 0 console errors
+
+Stage Summary:
+- Staff system now: Creator (Nishchal) manages profiles/roles, Admins edit content + own password only; roles limited to Creator/Admin
