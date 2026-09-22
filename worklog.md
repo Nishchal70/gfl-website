@@ -213,3 +213,18 @@ Work Log:
 
 Stage Summary:
 - Staff system now: Creator (Nishchal) manages profiles/roles, Admins edit content + own password only; roles limited to Creator/Admin
+
+---
+Task ID: 14b
+Agent: Main agent (Super Z)
+Task: Re-verify staff role system after session continuation (user requested English communication)
+
+Work Log:
+- Confirmed implementation intact end-to-end: DB has exactly 2 accounts (nishchal708@gmail.com = Creator, admin@gfl.gg = Admin; rep account gone); seed.ts upserts match
+- Wrote scripts/verify-staff-roles.sh — 12 API-level permission checks, all PASS: Creator login 200 role=Creator; Creator GET/POST /api/staff/manage allowed; Admin login 200 role=Admin; Admin blocked 403 on manage GET/POST/PATCH/DELETE; Admin PUT /api/admin/content passes auth (400 validation on bad page key, not 401/403); anonymous PUT 401; own-password route rejects wrong current password (no real passwords changed during tests)
+- Browser re-check (agent-browser 1280x800): Nishchal dashboard shows red Creator badge + Team tab (roster: GFL Admin + Nishchal "you", no Remove button on self) + Account tab; signed out, admin@gfl.gg login shows NO Team tab, only content tabs + Account tab with "Change your password"; zero console/page errors; lint clean
+- Screenshots: download/gfl-creator-team-tab.png, download/gfl-admin-account-tab.png
+- All communication switched to English per user preference
+
+Stage Summary:
+- Task 14 re-verified and confirmed complete; role matrix works exactly as requested (creator-only staff management, admin = content + own password)
