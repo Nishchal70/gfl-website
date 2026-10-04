@@ -263,3 +263,17 @@ Work Log:
 
 Stage Summary:
 - Repo is Vercel-ready: import + Turso env vars + one-time db init script is all the user needs; deployment steps handed to user in Hinglish
+
+---
+Task ID: 17
+Agent: Main agent (Super Z)
+Task: Initialize user's Turso production database and verify the Vercel DB path
+
+Work Log:
+- User provided Turso credentials (libsql://database-amber-notebook-vercel-...aws-us-east-1.turso.io, created via Vercel integration by the naming)
+- Ran scripts/init-turso.ts against the remote DB: 3 tables + indexes created, Nishchal (Creator) and admin@gfl.gg (Admin) seeded, verification query OK
+- New scripts/smoke-test-turso.ts: production-path test (db.ts factory -> PrismaLibSQL adapter -> Turso) — roster read OK, CMS overrides empty (defaults will serve), session write/read/delete roundtrip OK
+- No credentials persisted anywhere in the repo (used inline env vars only)
+
+Stage Summary:
+- User's Turso DB is live and app-compatible; user just needs to deploy/import on Vercel with the two env vars set, then login at #staff
