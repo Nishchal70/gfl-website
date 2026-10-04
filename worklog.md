@@ -245,3 +245,21 @@ Work Log:
 
 Stage Summary:
 - github.com/Nishchal70/gfl-website main now holds the full upgraded Next.js site incl. staff role system; old version on original-site-backup; user advised to revoke the PAT after use
+
+---
+Task ID: 16
+Agent: Main agent (Super Z)
+Task: Make the project Vercel-deployable (user asked how to deploy from GitHub)
+
+Work Log:
+- Root blocker: SQLite file DB does not persist on Vercel serverless (CMS saves would be lost) -> added Turso/libSQL support while keeping local dev identical
+- Installed @prisma/adapter-libsql + @libsql/client pinned to Prisma 6.19.2 (initial v7 install resolved to mismatch, realigned)
+- schema.prisma: driverAdapters flag turned out GA in 6.19.2 (deprecation warning) -> removed flag
+- src/lib/db.ts: env-driven factory — plain native engine for local file: SQLite; TURSO_DATABASE_URL (+ TURSO_AUTH_TOKEN) or libsql:// DATABASE_URL switches to libSQL adapter; API note: 6.19 PrismaLibSQL is a factory taking config {url, authToken}, not a client instance (URL_INVALID undefined error before fix)
+- scripts/init-turso.ts: one-shot remote initializer — raw DDL (3 tables + unique indexes + FK cascade) matching schema exactly, staff seed upserts with bcrypt hashes, verification query; accepts libsql:// and file: URLs
+- prisma/seed.ts now imports shared db factory (can target remote too); package.json: build simplified to next build (standalone copy was sandbox-only), postinstall prisma generate added (critical for Vercel install), db:seed + db:init-turso scripts
+- Verification: DDL roundtrip test (init script against temp file db -> Prisma adapter read/write/dates-as-Date all OK, scripts/test-db-modes.ts both modes PASS); stray x@y.zz test account from earlier permission tests deleted from live DB; production next build passes (11 routes); dev server restarted fresh; 12/12 permission checks pass; lint clean
+- Pushed 090dd84 to Nishchal70/gfl-website main (token still valid)
+
+Stage Summary:
+- Repo is Vercel-ready: import + Turso env vars + one-time db init script is all the user needs; deployment steps handed to user in Hinglish
