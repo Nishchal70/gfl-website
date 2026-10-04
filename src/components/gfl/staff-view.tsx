@@ -139,10 +139,6 @@ function LoginCard({ onSuccess }: { onSuccess: (staff: Staff) => void }) {
           )}
         </Button>
       </form>
-
-      <p className="mt-5 text-xs text-zinc-500 text-center">
-        Demo admin account — <b>admin@gfl.gg / GFLstaff2026!</b>
-      </p>
     </div>
   );
 }
