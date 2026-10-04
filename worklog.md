@@ -228,3 +228,20 @@ Work Log:
 
 Stage Summary:
 - Task 14 re-verified and confirmed complete; role matrix works exactly as requested (creator-only staff management, admin = content + own password)
+
+---
+Task ID: 15
+Agent: Main agent (Super Z)
+Task: Push the upgraded GFL website to GitHub (user repo Nishchal70/gfl-website)
+
+Work Log:
+- Repo had no remote/credentials; committed all pending Task 14 work first
+- Untracked .env, db/custom.db (gitignored db/) and the nested gfl-website gitlink reference; added db/ and /gfl-website/ to .gitignore; commit identity set to Nishchal <nishchal708@gmail.com>
+- Commit "Staff role system: Creator + Admin with creator-only team management" (1a2bb9f), 18 files
+- User provided a classic PAT; verified as account Nishchal70; remote origin added (token used inline in push URLs only, never persisted to .git/config or credentials)
+- Local and remote histories were unrelated (sandbox re-init) -> plan: backup then force-push
+- Pushed origin/main (e05ee0e4) to new branch original-site-backup (old site preserved), then force-pushed local main -> 1a2bb9f
+- Verified via ls-remote + API: main = staff-role commit, backup branch = old site, root listing shows src/prisma/public and no .env/db/gfl-website
+
+Stage Summary:
+- github.com/Nishchal70/gfl-website main now holds the full upgraded Next.js site incl. staff role system; old version on original-site-backup; user advised to revoke the PAT after use
