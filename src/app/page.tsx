@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Header } from "@/components/gfl/header";
 import { Footer } from "@/components/gfl/footer";
+import { BackToTop } from "@/components/gfl/back-to-top";
 import { HomeView } from "@/components/gfl/home-view";
 import { SiteContentProvider } from "@/components/gfl/site-content-context";
 import {
@@ -63,7 +64,8 @@ export default function Home() {
             {page === "staff" && <StaffView />}
           </div>
         </div>
-        <Footer />
+        <Footer onNavigate={navigate} />
+        <BackToTop />
       </div>
     </SiteContentProvider>
   );

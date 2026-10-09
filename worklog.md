@@ -277,3 +277,41 @@ Work Log:
 
 Stage Summary:
 - User's Turso DB is live and app-compatible; user just needs to deploy/import on Vercel with the two env vars set, then login at #staff
+
+---
+Task ID: 18
+Agent: Main agent (Super Z)
+Task: Remove public demo credentials from staff login card (user's first change via new workflow)
+
+Work Log:
+- Removed the "Demo admin account — admin@gfl.gg / GFLstaff2026!" hint paragraph from LoginCard in staff-view.tsx; card now shows only Email/Password fields + Sign in
+- Lint clean; local login still works; screenshot download/gfl-login-clean.png
+- Pushed 3a22a3f via stored credentials (no token prompt) -> Vercel auto-deployed
+- Live-verified: fetched production JS bundles from gfl-website.vercel.app — 0 occurrences of the demo password, login card markup present
+
+Stage Summary:
+- First chat.z.ai -> GitHub -> Vercel auto-deploy loop completed successfully; public demo credentials no longer shipped to visitors
+
+---
+Task ID: 19
+Agent: Main agent (Super Z)
+Task: Frontend polish pass — implement A+B tier improvements from the suggestion list (C-tier skipped per user). SANDBOX-ONLY (no git push; user will verify on chat.z.ai preview before authorizing Vercel deploy)
+
+Work Log:
+- New src/components/gfl/reveal.tsx: IntersectionObserver scroll-reveal wrapper (fade+slide, stagger via delay prop, IO-unsafe fallback via async setState to satisfy react-hooks/set-state-in-effect, reduced-motion respected globally)
+- New src/components/gfl/back-to-top.tsx: floating red gradient button appears after 640px scroll, smooth-scrolls to top, aria-hidden/tabIndex managed
+- Header upgraded: thin red scroll-progress bar (bottom edge, scaleX driven), shadow elevation on scroll, animated mobile menu (grid-template-rows 0fr->1fr + staggered menuIn items with --i delays, inert={!open} when closed), nav inactive items hover to red, active pill gets inset ring, header-brand scale micro-interaction
+- globals.css: gfl-btn shine sweep (::after skew gradient translateX on hover) + active press scale; gfl-card transition moved to base (un-hover eases back) + red border tint on hover; gfl-tile (red left-border accent on hover for requirement tiles); media-zoom hover zoom; themed red webkit scrollbar + Firefox scrollbar-color; ::selection red tint; scroll-padding-top 96px; antialiased font smoothing; h2.display text-wrap balance; gfl-footer top hairline glow + footer-brand hover; removed main/section .gfl-card auto cardIn animation (replaced by scroll-reveal); .reveal/.reveal-in + scroll-progress + mobile-menu + back-to-top + header-brand keyframes/styles
+- home-view.tsx: StatValue count-up component (parses "135+"/"2,500"/"2019" formats, easeOutQuart 1.3s on first viewport entry, non-numeric fallback); Stats/About/ChatSection wrapped in Reveal (button tier delay 180ms); QR moved into media-zoom wrapper; hero secondary CTA gains border+shadow+hover lift (primary/hero art untouched)
+- content-views.tsx: all views wrapped in Reveal (delay 90); assistance cards per-card stagger; requirement tiles -> gfl-tile; entry/community join cards hover lift; base-layouts GIF into media-zoom; section padding py-20 -> py-20 md:py-24
+- section-title.tsx: self-revealing via Reveal (all pages get animated headings incl. staff)
+- footer.tsx: now client, accepts onNavigate; quick-links nav row (all 7 pages), gradient hairline, copyright year auto + "Fan-made community site - Not affiliated with Supercell." disclaimer line
+- page.tsx: Footer gets navigate prop, BackToTop mounted
+- staff-view.tsx: LoginCard wrapped in Reveal (dashboard untouched)
+- Hero section intentionally untouched (heavily tuned in Tasks 9-13; desktop pixel-identical, mobile spec preserved)
+- Verification: lint clean; tsc --noEmit zero errors in changed files (pre-existing db.ts/site-content.ts strictness notes remain, non-blocking); dev server restarted fresh (pkill + rm -rf .next + setsid); agent-browser desktop 1280x800 (hero, stats count-up final values 135+/2019/1200+, progress bar partial->full, about reveal, join tiles, staff login card, footer links) + mobile 390x844 (hero spec intact, hamburger open/close 0fr verified, back-to-top hidden-at-top/visible-after-scroll via aria-hidden+class, reveals fire); zero console/page errors
+- Screenshots: download/gfl-polish-desktop-{hero,stats,mid,footer,join,staff}.png, gfl-polish-mobile-{hero,menu,mid}.png
+
+Stage Summary:
+- 14 A+B-tier polish upgrades live on the sandbox (localhost:3000 / chat.z.ai preview): scroll-reveal system, count-up stats, scroll progress bar, header elevation, animated mobile menu, button shine + press states, card hover glow, tile accents, media zoom, back-to-top, footer upgrade (links + disclaimer), scrollbar/selection theming, spacing/typography refinement, login card entrance
+- NOT pushed to git/Vercel per new workflow: awaiting user verification on the preview domain and explicit authorization before `git push origin main`

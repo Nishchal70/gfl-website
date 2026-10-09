@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SectionTitle } from "@/components/gfl/section-title";
+import { Reveal } from "@/components/gfl/reveal";
 import { useToast } from "@/hooks/use-toast";
 import { HomeEditor, OverviewEditor } from "@/components/gfl/dashboard/editors-home";
 import {
@@ -83,14 +84,15 @@ function LoginCard({ onSuccess }: { onSuccess: (staff: Staff) => void }) {
   };
 
   return (
-    <div className="gfl-card p-8">
-      <div className="flex items-center gap-2 text-zinc-700">
-        <KeyRound className="h-5 w-5 text-red-600" aria-hidden="true" />
-        <p className="text-sm">
-          Staff access is protected by real session authentication — sign in
-          with the credentials issued by GFL leadership.
-        </p>
-      </div>
+    <Reveal className="w-full">
+      <div className="gfl-card p-8">
+        <div className="flex items-center gap-2 text-zinc-700">
+          <KeyRound className="h-5 w-5 text-red-600" aria-hidden="true" />
+          <p className="text-sm">
+            Staff access is protected by real session authentication — sign in
+            with the credentials issued by GFL leadership.
+          </p>
+        </div>
 
       <form onSubmit={handleSubmit} className="mt-6" noValidate>
         <div className="space-y-1.5">
@@ -139,7 +141,8 @@ function LoginCard({ onSuccess }: { onSuccess: (staff: Staff) => void }) {
           )}
         </Button>
       </form>
-    </div>
+      </div>
+    </Reveal>
   );
 }
 

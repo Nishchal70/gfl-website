@@ -57,3 +57,4 @@ db/
 
 # original cloned reference repo (kept locally only)
 /gfl-website/
+upload/
