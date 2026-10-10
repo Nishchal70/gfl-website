@@ -134,7 +134,7 @@ const TEAM_TAB: TabMeta = {
 };
 
 const TRIGGER_CLS =
-  "flex-none rounded-lg data-[state=active]:bg-white data-[state=active]:text-red-700 data-[state=active]:shadow-sm";
+  "flex-none rounded-lg px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm data-[state=active]:bg-white data-[state=active]:text-red-700 data-[state=active]:shadow-sm";
 const CONTENT_CLS = "mt-6 data-[state=inactive]:hidden";
 
 function LoginCard({ onSuccess }: { onSuccess: (staff: Staff) => void }) {
@@ -259,7 +259,7 @@ function LoginCard({ onSuccess }: { onSuccess: (staff: Staff) => void }) {
 /** Info strip shown above every editor: what this section edits + a link to see it live. */
 function TabHeader({ icon: Icon, label, desc, href }: TabMeta) {
   return (
-    <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-stone-200 bg-stone-50/70 px-4 py-3">
+    <div className="mb-5 flex flex-col gap-3 rounded-xl border border-stone-200 bg-stone-50/70 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-3 min-w-0">
         <span className="h-9 w-9 shrink-0 rounded-lg bg-red-50 border border-red-100 text-red-700 grid place-items-center">
           <Icon className="h-4 w-4" aria-hidden="true" />
@@ -549,7 +549,7 @@ function Dashboard({ staff, onLogout }: { staff: Staff; onLogout: () => void }) 
       <Separator className="my-6" />
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="flex flex-nowrap overflow-x-auto md:flex-wrap h-auto w-full gap-1 bg-stone-100 rounded-xl p-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <TabsList className="flex flex-wrap h-auto w-full gap-1 bg-stone-100 rounded-xl p-1.5">
           <TabsTrigger value="start" className={TRIGGER_CLS}>
             <Compass aria-hidden="true" />
             Start Here

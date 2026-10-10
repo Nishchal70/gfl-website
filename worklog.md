@@ -432,3 +432,20 @@ Work Log:
 
 Stage Summary:
 - Sandbox healthy; user-side network error explained (no local server / missing DB in fresh clone). Video walkthrough delivered as zero-setup verification path; awaiting user choice: watch video OR authorize push to verify on live site. No code changes.
+
+---
+Task ID: 21-bugfix3
+Agent: Main agent (Super Z)
+Task: User reported "bahut saare bugs" after Task 21 went live - full QA + fixes
+
+Work Log:
+- Full production QA (desktop 1280 + mobile 390): login OK, session persists reload, all 10 tabs render, CMS save -> Turso persist roundtrip OK, restore OK, Team/Account render, public pages (home/opponents/contacts/footer) clean, zero console errors
+- BUG 1 (HIGH, mobile): tab strip was flex-nowrap overflow-x-auto with hidden scrollbar - 706px content in 308px viewport, half-cut labels ("ase Layouts"), selected tab scrolled out of view, no affordance. FIX: flex-wrap everywhere (10 tabs wrap to 4 tidy rows on mobile, 2 on desktop), compact trigger sizing text-xs sm:text-sm
+- BUG 2 (MED, both): sticky save bar (bottom-4 p-4) floated over editor content, 3 rows tall on mobile. FIX: compact bottom-2 md:bottom-4, p-3 md:p-4, z-10, text-xs md:text-sm status, h-9 sm:h-10 buttons, tighter gaps
+- BUG 3 (LOW, mobile): TabHeader flex-wrap link wrapped awkwardly. FIX: flex-col sm:flex-row sm:justify-between
+- Verified iOS input zoom NOT an issue (ui Input/Textarea already text-base md:text-sm)
+- Sandbox verification: mobile tab bar fully visible (screenshot fix-mobile-tabs.png), save bar compact at content end (fix-mobile-savebar.png), sticky mid-scroll clean (fix-mobile-sticky.png), desktop 2-row bar no overflow sw==cw==662 (fix-desktop-tabs.png), save roundtrip persisted after reload, data restored pristine
+- eslint + tsc clean on changed files; production QA test data cleaned (no QA2 remnants)
+
+Stage Summary:
+- 3 UI bug fixes committed locally (dashboard mobile tab bar, save bar, tab header); NOT pushed - awaiting user permission per workflow

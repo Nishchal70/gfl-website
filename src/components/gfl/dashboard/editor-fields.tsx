@@ -147,8 +147,8 @@ export function EditorActions({
   onReset: () => void;
 }) {
   return (
-    <div className="sticky bottom-4 mt-8 rounded-2xl border border-stone-200 bg-white/95 backdrop-blur p-4 shadow-lg flex flex-wrap items-center gap-3">
-      <span className="text-sm text-zinc-500 flex-1 min-w-32">
+    <div className="sticky bottom-2 md:bottom-4 z-10 mt-8 rounded-2xl border border-stone-200 bg-white/95 backdrop-blur p-3 md:p-4 shadow-lg flex flex-wrap items-center gap-2 md:gap-3">
+      <span className="text-xs md:text-sm text-zinc-500 flex-1 min-w-24">
         {saving
           ? "Saving…"
           : dirty
@@ -160,6 +160,7 @@ export function EditorActions({
         variant="outline"
         onClick={onReset}
         disabled={saving}
+        className="h-9 px-3 text-xs sm:h-10 sm:px-4 sm:text-sm"
       >
         <RotateCcw className="h-4 w-4" aria-hidden="true" />
         Reset to original
@@ -168,7 +169,7 @@ export function EditorActions({
         type="button"
         onClick={onSave}
         disabled={!dirty || saving}
-        className="gfl-btn rounded-xl font-bold"
+        className="gfl-btn h-9 px-3 text-xs sm:h-10 sm:px-4 sm:text-sm rounded-xl font-bold"
       >
         {saving ? (
           <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
