@@ -58,3 +58,7 @@ db/
 # original cloned reference repo (kept locally only)
 /gfl-website/
 upload/
+
+# videos (never commit - may contain credentials on screen)
+*.webm
+*.mp4

@@ -367,3 +367,68 @@ Work Log:
 Stage Summary:
 - Opponents page contact buttons now show real WhatsApp/Discord/Telegram/BAND brand icons in polished brand-tinted tiles
 - Still sandbox-only (commit pending): awaiting user verification + explicit permission before git push -> Vercel
+
+---
+Task ID: 20c
+Agent: Main agent (Super Z)
+Task: User-authorized push of Task 20+20b (opponents page + real brand icons) to GitHub -> Vercel (live)
+
+Work Log:
+- Found 3 sandbox UUID auto-snapshot commits (6aad7a4/336afa3/5cd4301) holding Task 20+20b; verified HEAD contained final state (opponents-view next/image icons, public/icons x4, pages.ts/site-content.ts opponents entries, staff-view CMS Opponents tab)
+- git reset --soft 034b342 -> single clean commit 925eb99 "Add 'A Letter to Opponents' page: hero opponent CTA, About Learn More button, CMS-editable letter, real WhatsApp/Discord/Telegram/BAND brand icons" (30 files)
+- ~/.git-credentials lost in sandbox rebuild again -> recreated from stored PAT (chmod 600), push succeeded: 034b342..925eb99 main
+- Live verification gfl-website.vercel.app: /icons/whatsapp.png + /icons/band.jpg -> 200; production JS chunks contain "Click here if you are an opponent", "You've Matched with GFL", band.us/@gflentry, icons/whatsapp.png
+
+Stage Summary:
+- Opponents letter page + real brand contact icons are LIVE on production; commit 925eb99; credentials flow restored
+
+---
+Task ID: 21
+Agent: Main agent (Super Z)
+Task: Staff dashboard UX overhaul - make everything easily discoverable ("zyada idhar udhar na karna pade")
+
+Work Log:
+- staff-view.tsx rewritten (~660 lines): new "Start Here" default tab (welcome box, 3-step how-editing-works guide, 8 clickable section cards with icon+description jumping straight to that tab, Useful Links box [View live site / Entry BAND / Global Chat / Change password], text formatting cheatsheet with live-styled examples, edits-persist tip)
+- DASHBOARD_TABS replaced by CONTENT_TABS/ACCOUNT_TAB/TEAM_TAB meta (LucideIcon + desc + optional href); tab strip now shows icons on every tab, order: Start Here | 7 content pages | Account | Team (creator last); mobile: nowrap + horizontal scroll (scrollbar hidden), md+: wrap
+- TabHeader component above every editor: icon + "what this edits" description + "View this page" deep link (/#overview etc. target _blank) for content tabs
+- forceMount on all TabsContent + data-[state=inactive]:hidden -> editor drafts survive tab switching (typed text no longer lost when hopping tabs)
+- LoginCard: show/hide password toggle (Eye/EyeOff, aria-label), friendlier copy, "forgot password / first time? message the Creator" help line, autoFocus email
+- Dashboard header: added "View site" quick button; removed dense instructions paragraph (moved into Start Here cheatsheet)
+- Fixed 2 self-introduced issues during verification: TabMeta "key" field spread into JSX (React key warning) -> renamed to "id" everywhere; missed NavCard key={t.key} -> key={t.id}
+- Verified (agent-browser): login 1280x800 + password toggle (type password<->text), Creator lands on Start Here, card click switches tab, Playwright fill -> switch tab -> return = draft persisted ("TEST DRAFT PERSIST" retained), TabHeader + View this page link render, Account tab, Admin login shows 9 tabs WITHOUT Team (role gating intact), mobile 390 cards stack single column + tablist scrollable (scrollLeft 398); console+page errors ZERO after fixes; lint clean; tsc clean for changed file
+- Screenshots: download/gfl-dash-{login,starthere,starthere-2,starthere-cards,home-editor,account,mobile-start,mobile-tabs-scrolled}.png
+- No CMS data mutated (drafts only in browser state, never saved); local DB untouched
+
+Stage Summary:
+- Staff dashboard fully re-oriented for non-technical users: Start Here hub with one-click access to every section, icon tabs with per-tab descriptions + live page links, tab-switch-safe drafts, friendlier login
+- Sandbox-only: awaiting user verification + explicit permission before git push -> Vercel
+
+---
+Task ID: 21-bugfix
+Agent: Main agent (Super Z)
+Task: User reported "log in nhi ho rh h" - investigate staff login failure
+
+Work Log:
+- Tested local API (localhost:3000/api/staff/login): responds correctly, both staff accounts present in SQLite (nishchal708@gmail.com Creator, admin@gfl.gg Admin)
+- Probed production API (gfl-website.vercel.app/api/staff/login): reachable, generic invalid-credentials error for fake account (no enumeration, correct)
+- Tested DOCUMENTED credentials on PRODUCTION API: both accounts return HTTP 200 (Turso DB has correct seeded password hashes)
+- Full browser E2E on PRODUCTION UI: opened #staff, filled documented Creator credentials, clicked Sign in -> Staff Dashboard rendered as Nishchal (Creator) with all tabs; screenshot download/gfl-login-works-live.png
+- Full browser E2E on LOCAL UI: same flow -> "Welcome back! Signed in as Nishchal (Creator)" toast + dashboard; PASS
+- Wrong-password test: proper "Invalid credentials. Contact GFL leadership if you lost access." error shown
+
+Stage Summary:
+- Login is NOT broken on local OR production; user is almost certainly entering wrong credentials (typo/caps/autofill). No code changes made. Reported credentials + troubleshooting steps to user; offered Turso+local password reset if truly forgotten.
+
+---
+Task ID: 21-bugfix2
+Agent: Main agent (Super Z)
+Task: User got "Network error" on localhost login while trying to self-verify Task 21 UX
+
+Work Log:
+- Sandbox health check: GET / 200, POST /api/staff/login 200 (server fine, dev.log clean logins)
+- Root cause identified: user opened localhost:3000 on their OWN machine. localhost:3000 is the sandbox server only. If they cloned the repo, db/ and .env are gitignored (verified: 0 tracked files) -> API route crashes -> fetch throws -> "Network error. Please check your connection and try again." (exact LoginCard catch message)
+- Confirmed repo rebuild path documented in .gitignore comments: npx prisma db push + npx tsx prisma/seed.ts
+- Recorded 30fps video walkthrough download/gfl-dashboard-tour.webm (~5MB): login with real creds -> Start Here (welcome, 3-step guide, section cards, useful links, cheatsheet scroll) -> Home editor -> Opponents tab -> Account tab -> sign out. (First take had a mis-click on header nav; discarded, clean retake saved.)
+
+Stage Summary:
+- Sandbox healthy; user-side network error explained (no local server / missing DB in fresh clone). Video walkthrough delivered as zero-setup verification path; awaiting user choice: watch video OR authorize push to verify on live site. No code changes.
