@@ -3,7 +3,7 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { Users, ShieldCheck, Swords } from "lucide-react";
+import { ArrowRight, Users, ShieldCheck, Swords } from "lucide-react";
 import { SectionTitle } from "@/components/gfl/section-title";
 import { RichText } from "@/components/gfl/rich-text";
 import { Reveal } from "@/components/gfl/reveal";
@@ -100,10 +100,14 @@ function Hero({ onNavigate }: { onNavigate: (page: PageId) => void }) {
               {home.primaryCta}
             </button>
             <button
-              onClick={() => onNavigate("overview")}
-              className="bg-white px-7 py-4 rounded-xl font-bold border border-stone-200/80 shadow-sm min-h-11 transition-all hover:bg-white hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
+              onClick={() => onNavigate("opponents")}
+              className="inline-flex items-center gap-2 bg-white px-5 py-4 rounded-xl font-bold border border-stone-200/80 shadow-sm min-h-11 transition-all hover:bg-white hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
             >
-              {home.secondaryCta}
+              <Swords
+                className="h-5 w-5 shrink-0 text-red-600"
+                aria-hidden="true"
+              />
+              {home.opponentCta}
             </button>
           </div>
         </div>
@@ -141,7 +145,7 @@ function Stats() {
   );
 }
 
-function About() {
+function About({ onNavigate }: { onNavigate: (page: PageId) => void }) {
   const home = useSiteContent().home;
   return (
     <section className="grid-bg py-24">
@@ -152,6 +156,17 @@ function About() {
             text={home.aboutBody}
             className="gfl-card p-7 md:p-11 text-lg leading-8 text-zinc-700"
           />
+        </Reveal>
+        <Reveal delay={170}>
+          <div className="text-center mt-9">
+            <button
+              onClick={() => onNavigate("overview")}
+              className="inline-flex items-center gap-2 gfl-btn px-8 py-4 rounded-xl font-bold"
+            >
+              {home.secondaryCta}
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -198,7 +213,7 @@ export function HomeView({ onNavigate }: { onNavigate: (page: PageId) => void })
     <>
       <Hero onNavigate={onNavigate} />
       <Stats />
-      <About />
+      <About onNavigate={onNavigate} />
       <ChatSection />
     </>
   );

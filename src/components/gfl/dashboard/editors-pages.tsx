@@ -262,3 +262,117 @@ export function BaseLayoutsEditor() {
     </div>
   );
 }
+
+export function OpponentsEditor() {
+  const { draft, set, dirty, saving, save, reset } =
+    usePageEditor("opponents");
+
+  return (
+    <div className="space-y-5">
+      <TextField
+        label="Eyebrow (small red text above the title)"
+        value={draft.eyebrow}
+        onChange={(v) => set("eyebrow", v)}
+      />
+      <TextField
+        label="Big title"
+        value={draft.title}
+        onChange={(v) => set("title", v)}
+      />
+      <TextAreaField
+        label="Greeting line"
+        value={draft.greeting}
+        onChange={(v) => set("greeting", v)}
+        rows={2}
+      />
+      <TextAreaField
+        label="Letter body"
+        hint="Blank line = new paragraph. **bold** works."
+        value={draft.body}
+        onChange={(v) => set("body", v)}
+        rows={10}
+      />
+      <TextField
+        label={'"Why not try GFL?" heading'}
+        value={draft.tryTitle}
+        onChange={(v) => set("tryTitle", v)}
+      />
+      <TextAreaField
+        label={'"Why not try GFL?" body'}
+        value={draft.tryBody}
+        onChange={(v) => set("tryBody", v)}
+        rows={5}
+      />
+      <TextAreaField
+        label="Contact intro line (above the buttons)"
+        value={draft.contactIntro}
+        onChange={(v) => set("contactIntro", v)}
+        rows={2}
+      />
+
+      <div className="rounded-2xl border border-stone-200 bg-stone-50/60 p-4 space-y-4">
+        <p className="text-sm font-bold">Contact buttons</p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <TextField
+            label="WhatsApp label"
+            value={draft.whatsappLabel}
+            onChange={(v) => set("whatsappLabel", v)}
+          />
+          <TextField
+            label="WhatsApp link URL"
+            value={draft.whatsappUrl}
+            onChange={(v) => set("whatsappUrl", v)}
+          />
+          <TextField
+            label="Telegram label"
+            value={draft.telegramLabel}
+            onChange={(v) => set("telegramLabel", v)}
+          />
+          <TextField
+            label="Telegram link URL"
+            value={draft.telegramUrl}
+            onChange={(v) => set("telegramUrl", v)}
+          />
+          <TextField
+            label="Discord label"
+            value={draft.discordLabel}
+            onChange={(v) => set("discordLabel", v)}
+          />
+          <TextField
+            label="Discord link URL"
+            value={draft.discordUrl}
+            onChange={(v) => set("discordUrl", v)}
+          />
+          <TextField
+            label="BAND label"
+            value={draft.bandLabel}
+            onChange={(v) => set("bandLabel", v)}
+          />
+          <TextField
+            label="BAND link URL"
+            value={draft.bandUrl}
+            onChange={(v) => set("bandUrl", v)}
+          />
+        </div>
+      </div>
+
+      <TextAreaField
+        label="Thank-you line"
+        value={draft.thanks}
+        onChange={(v) => set("thanks", v)}
+        rows={2}
+      />
+      <TextField
+        label="Signature"
+        value={draft.signature}
+        onChange={(v) => set("signature", v)}
+      />
+      <EditorActions
+        dirty={dirty}
+        saving={saving}
+        onSave={save}
+        onReset={reset}
+      />
+    </div>
+  );
+}

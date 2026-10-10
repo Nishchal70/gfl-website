@@ -13,6 +13,7 @@ import {
   AssistanceView,
   BaseLayoutsView,
 } from "@/components/gfl/content-views";
+import { OpponentsView } from "@/components/gfl/opponents-view";
 import { StaffView } from "@/components/gfl/staff-view";
 import { isPageId, type PageId } from "@/lib/pages";
 
@@ -61,6 +62,7 @@ export default function Home() {
             {page === "battle-style" && <BattleStyleView />}
             {page === "assistance" && <AssistanceView />}
             {page === "base-layouts" && <BaseLayoutsView />}
+            {page === "opponents" && <OpponentsView />}
             {page === "staff" && <StaffView />}
           </div>
         </div>

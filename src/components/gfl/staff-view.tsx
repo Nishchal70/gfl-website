@@ -24,6 +24,7 @@ import {
   BaseLayoutsEditor,
   BattleStyleEditor,
   HowToJoinEditor,
+  OpponentsEditor,
 } from "@/components/gfl/dashboard/editors-pages";
 import { TeamManager } from "@/components/gfl/dashboard/team-manager";
 import { AccountSettings } from "@/components/gfl/dashboard/account-settings";
@@ -47,6 +48,7 @@ const DASHBOARD_TABS: { key: string; label: string }[] = [
   { key: "battle-style", label: "Battle Style" },
   { key: "assistance", label: "Assistance" },
   { key: "base-layouts", label: "Base Layouts" },
+  { key: "opponents", label: "Opponents" },
 ];
 
 function LoginCard({ onSuccess }: { onSuccess: (staff: Staff) => void }) {
@@ -247,6 +249,9 @@ function Dashboard({ staff, onLogout }: { staff: Staff; onLogout: () => void }) 
         </TabsContent>
         <TabsContent value="base-layouts" className="mt-6">
           <BaseLayoutsEditor />
+        </TabsContent>
+        <TabsContent value="opponents" className="mt-6">
+          <OpponentsEditor />
         </TabsContent>
         {isCreator(staff.role) && (
           <TabsContent value="team" className="mt-6">

@@ -23,6 +23,8 @@ export const homeSchema = z.object({
   heroDescription: z.string(),
   primaryCta: z.string(),
   secondaryCta: z.string(),
+  /** Hero button that opens the "A Letter to Opponents" page. */
+  opponentCta: z.string(),
   stats: z
     .array(z.object({ value: z.string(), label: z.string() }))
     .length(3),
@@ -91,6 +93,27 @@ export const baseLayoutsSchema = z.object({
 });
 export type BaseLayoutsContent = z.infer<typeof baseLayoutsSchema>;
 
+export const opponentsSchema = z.object({
+  eyebrow: z.string(),
+  title: z.string(),
+  greeting: z.string(),
+  body: z.string(),
+  tryTitle: z.string(),
+  tryBody: z.string(),
+  contactIntro: z.string(),
+  whatsappLabel: z.string(),
+  whatsappUrl: z.string(),
+  telegramLabel: z.string(),
+  telegramUrl: z.string(),
+  discordLabel: z.string(),
+  discordUrl: z.string(),
+  bandLabel: z.string(),
+  bandUrl: z.string(),
+  thanks: z.string(),
+  signature: z.string(),
+});
+export type OpponentsContent = z.infer<typeof opponentsSchema>;
+
 export const pageSchemas = {
   home: homeSchema,
   overview: overviewSchema,
@@ -98,6 +121,7 @@ export const pageSchemas = {
   "battle-style": battleStyleSchema,
   assistance: assistanceSchema,
   "base-layouts": baseLayoutsSchema,
+  opponents: opponentsSchema,
 } as const;
 
 export type PageKey = keyof typeof pageSchemas;
@@ -114,6 +138,7 @@ export type SiteContent = {
   "battle-style": BattleStyleContent;
   assistance: AssistanceContent;
   "base-layouts": BaseLayoutsContent;
+  opponents: OpponentsContent;
 };
 
 /** The shipped content — identical to the original site copy. */
@@ -127,6 +152,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       "Unlock the ultimate Clash of Clans progression strategy. Join 135+ active clans participating in synchronized farming wars and enjoy stress-free growth with guaranteed massive loot payouts every 48 hours.",
     primaryCta: "Join GFL Today",
     secondaryCta: "Learn More",
+    opponentCta: "Click here if you are an opponent of a GFL clan",
     stats: [
       { value: "135+", label: "ACTIVE CLANS" },
       { value: "2019", label: "FOUNDED" },
@@ -269,6 +295,29 @@ export const DEFAULT_CONTENT: SiteContent = {
     placeholderBody:
       "Our approved farming base layouts are being prepared and will be published here as soon as they are ready. Stay tuned!",
     mediaSrc: "/assets/base-layouts-preview.gif",
+  },
+  opponents: {
+    eyebrow: "A Letter to Opponents",
+    title: "You've Matched with GFL!",
+    greeting: "Hello, and welcome to a Global Farming League (GFL) war!",
+    body:
+      "It looks like you've matched with one of our farming clans. Since this is an unexpected matchup, we'd like to offer you a simple and mutually beneficial way to play this war.\n\nWe will let your clan win the war. All we ask is that, wherever possible, you place your Town Halls outside your defenses on as many of your higher-level bases as you can. This allows our members to collect the resources they need while keeping the war relaxed and straightforward for everyone.\n\nYour clan can play normally and secure the war victory and its rewards, while our members get the opportunity to farm the exposed Town Halls and storages.\n\nThere is no need for a competitive battle between us. We simply ask for your cooperation in making this an enjoyable and rewarding mismatch for both clans.",
+    tryTitle: "Why not try GFL?",
+    tryBody:
+      "If you like the idea of relaxed wars where clans can farm resources, progress faster, and avoid unnecessary competition, you may enjoy being part of GFL.\n\nWe currently have **135+ active clans** working together through our organized farming system.",
+    contactIntro:
+      "If you'd like to learn more about GFL, speak with our staff or give the league a try, feel free to contact us:",
+    whatsappLabel: "WhatsApp",
+    whatsappUrl:
+      "https://chat.whatsapp.com/Kozmqt5pZIZH9ColGpOIsH?s=cl&p=a&mlu=4&ilr=4",
+    telegramLabel: "Telegram",
+    telegramUrl: "https://t.me/+HxHQAt-XNaU3NWJl",
+    discordLabel: "Discord",
+    discordUrl: "https://discord.gg/3kPA3WMKBC",
+    bandLabel: "BAND",
+    bandUrl: "https://band.us/@gflentry",
+    thanks: "Thank you for cooperating, and we hope you enjoy the war! ❤️",
+    signature: "🌎 Global Farming League 🌎",
   },
 };
 

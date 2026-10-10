@@ -5,7 +5,8 @@ export type PageId =
   | "battle-style"
   | "assistance"
   | "base-layouts"
-  | "staff";
+  | "staff"
+  | "opponents";
 
 export const NAV_ITEMS: { id: PageId; label: string }[] = [
   { id: "home", label: "Home" },
@@ -18,7 +19,12 @@ export const NAV_ITEMS: { id: PageId; label: string }[] = [
 ];
 
 /** Views rendered inside the single `/` route (hash-synced for deep links). */
-export const PAGE_IDS = NAV_ITEMS.map((i) => i.id);
+// "opponents" is intentionally not in the nav bar — it is linked from the
+// hero button but stays deep-linkable (#opponents).
+export const PAGE_IDS: PageId[] = [
+  ...NAV_ITEMS.map((i) => i.id),
+  "opponents",
+];
 
 export function isPageId(value: string): value is PageId {
   return (PAGE_IDS as string[]).includes(value);

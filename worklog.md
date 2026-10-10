@@ -315,3 +315,55 @@ Work Log:
 Stage Summary:
 - 14 A+B-tier polish upgrades live on the sandbox (localhost:3000 / chat.z.ai preview): scroll-reveal system, count-up stats, scroll progress bar, header elevation, animated mobile menu, button shine + press states, card hover glow, tile accents, media zoom, back-to-top, footer upgrade (links + disclaimer), scrollbar/selection theming, spacing/typography refinement, login card entrance
 - NOT pushed to git/Vercel per new workflow: awaiting user verification on the preview domain and explicit authorization before `git push origin main`
+
+---
+Task ID: 19b
+Agent: Main agent (Super Z)
+Task: User-authorized push of Task 19 polish to GitHub -> Vercel (live)
+
+Work Log:
+- Found sandbox auto-snapshot commits (UUID messages: ceb7553/151c1b0/9a362a5) had swept the Task 19 changes; verified HEAD contained the final state (footer disclaimer + reveal CSS present), origin/main still at 3a22a3f
+- Discovered upload/ (user's personal screenshots + WhatsApp video) had been tracked in earlier snapshots; untracked via git rm -r --cached upload/ and added upload/ to .gitignore (files remain local; already-public history cleanup offered as optional follow-up)
+- Squashed all pending work into one clean commit 034b342 "Frontend polish pass: scroll reveals, count-up stats, progress bar, animated mobile menu, button/card micro-interactions, back-to-top, footer upgrade"
+- ~/.git-credentials was lost in sandbox rebuild -> recreated from the stored PAT (chmod 600); push worked without prompt
+- Pushed 3a22a3f..034b342 main -> github.com/Nishchal70/gfl-website
+- Live verification on gfl-website.vercel.app after Vercel auto-deploy: SSR HTML contains "Not affiliated with Supercell" + "scroll-progress"; production CSS chunks contain reveal-in + back-to-top + menuIn rules
+
+Stage Summary:
+- Task 19 frontend polish is LIVE on production (gfl-website.vercel.app); commit 034b342; uploads folder no longer tracked going forward; credentials flow restored
+
+---
+Task ID: 20
+Agent: Main agent (Super Z)
+Task: Hero button swap + "A Letter to Opponents" page (sandbox-only, awaiting user verification before Vercel push)
+
+Work Log:
+- pages.ts: added "opponents" to PageId + PAGE_IDS (deep-linkable #opponents) but NOT in NAV_ITEMS (stays out of header/footer nav)
+- site-content.ts: home schema + opponentCta (default "Click here if you are an opponent of a GFL clan"); new opponentsSchema (17 fields: eyebrow/title/greeting/body/tryTitle/tryBody/contactIntro + 4 contact label/url pairs + thanks/signature) with full letter copy as defaults; registered in pageSchemas/SiteContent/DEFAULT_CONTENT
+- home-view.tsx: hero secondary CTA replaced by opponent button (white, Swords icon, navigates to #opponents); About section now has centered "Learn More ->" gfl-btn below the card (navigates to #overview). BUG found+fixed in verification: About used onNavigate without receiving the prop -> ReferenceError; added prop plumbing (About({onNavigate}) + <About onNavigate=...>)
+- NEW opponents-view.tsx: eyebrow + display title "You've Matched with GFL!" + red-line; letter card (greeting bold, body via RichText); "Why not try GFL?" red display subheading; 4 brand contact buttons (WhatsApp #25D366 MessageCircle, Telegram #229ED9 Send, Discord #5865F2 Gamepad2, BAND #03C75A custom B glyph) in 2x2/4-col grid with hover lift + staggered Reveal; red-50 thanks box with "Thank you for cooperating... ❤️" + brand-font "🌎 Global Farming League 🌎"
+- CMS: OpponentsEditor in editors-pages.tsx (all fields incl. contact label/URL grid); "Opponents" tab in DASHBOARD_TABS + TabsContent; editors-home.tsx CTA fields relabeled (primary -> How to Join, secondary -> About section button) + new "Opponent button" field
+- Local dev DB: staff logins had been broken by Task 14 E2E password change; re-ran prisma/seed.ts (upsert updates passwordHash) restoring documented creds (nishchal708@gmail.com/discodeewane Creator, admin@gfl.gg/GFLstaff2026! Admin) - local sqlite only, Turso untouched
+- New scripts/test-opponents-cms.ts: login -> PUT opponents defaults (200) -> GET shows override under content wrapper (first run had a wrong-shape assertion in the script itself, fixed) -> deleteMany cleanup. ROUND-TRIP: PASS, SiteContent table back to pristine
+- Verification: lint clean; tsc unchanged (same 3 pre-existing errors in db.ts/site-content.ts merge typing, none in changed files); agent-browser fresh session: hero opponent button click -> #opponents (4 contact links exactly as user provided: whatsapp chat link, t.me, discord.gg, band.us/@gflentry), About Learn More -> #overview, mobile 390 hero button stacks below primary + 2x2 contact grid + thanks box render, dashboard shows Opponents tab with all editor fields, zero console/page errors after fresh session (one transient crash fixed mid-verification)
+- Screenshots: download/gfl-opponent-{desktop-hero,page-top,page-contacts,page-end,fresh,mobile-hero,mobile-bottom,dash-tab,dash-editor}.png, gfl-about-learnmore.png
+
+Stage Summary:
+- Opponents letter page live on sandbox at #opponents with CMS-editable content; hero now: [Join GFL Today] [Swords: Click here if you are an opponent of a GFL clan]; About Us gained centered Learn More button; local staff passwords restored to documented values
+- NOT pushed to git/Vercel - awaiting user verification + explicit permission per workflow
+
+---
+Task ID: 20b
+Agent: Main agent (Super Z)
+Task: Swap placeholder lucide icons for real brand icons (WhatsApp/Discord/Telegram/BAND) on Opponents page contact buttons
+
+Work Log:
+- User uploaded 4 real brand icon images (3 vecteezy PNGs + 1 BAND logo jpg); copied to public/icons/ as whatsapp.png, discord.png, telegram.png, band.jpg
+- scripts/resize-icons.py: downscaled all to 256px (was up to 602KB telegram -> 23KB; band.jpg 5KB; PIL LANCZOS, RGBA preserved for transparent PNGs)
+- opponents-view.tsx: removed lucide MessageCircle/Send/Gamepad2 + custom B glyph; buttons now render real brand images via next/image (h-10 w-10 inside h-14 w-14 rounded-2xl soft brand-tinted tiles: green-50/indigo-50/sky-50/emerald-50 with matching colored glow shadows); BAND jpg uses object-cover rounded-[10px] (app-icon look), PNGs object-contain; order fixed to user's stated order: WhatsApp -> Discord -> Telegram -> BAND
+- Verified desktop 1280x800 + mobile 390x844 (2x2 grid), hrefs exact (chat.whatsapp.com link, discord.gg/3kPA3WMKBC, t.me/+HxHQAt-XNaU3NWJl, band.us/@gflentry), next/image serving w=96 variants; lint clean; zero console/page errors
+- Screenshots: download/gfl-opponent-icons-{top,contacts,mobile,mobile-grid}.png
+
+Stage Summary:
+- Opponents page contact buttons now show real WhatsApp/Discord/Telegram/BAND brand icons in polished brand-tinted tiles
+- Still sandbox-only (commit pending): awaiting user verification + explicit permission before git push -> Vercel

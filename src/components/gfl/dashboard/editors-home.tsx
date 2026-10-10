@@ -54,16 +54,21 @@ export function HomeEditor() {
       />
       <div className="grid sm:grid-cols-2 gap-4">
         <TextField
-          label="Primary button"
+          label="Primary button (hero, goes to How to Join)"
           value={draft.primaryCta}
           onChange={(v) => set("primaryCta", v)}
         />
         <TextField
-          label="Secondary button"
+          label="About section button (below About Us, goes to Overview)"
           value={draft.secondaryCta}
           onChange={(v) => set("secondaryCta", v)}
         />
       </div>
+      <TextField
+        label="Opponent button (hero, opens the A Letter to Opponents page)"
+        value={draft.opponentCta}
+        onChange={(v) => set("opponentCta", v)}
+      />
 
       <div className="space-y-2">
         <p className="text-sm font-bold">Stats bar {STAT_ICONS_HINT}</p>
