@@ -130,14 +130,21 @@ export function HomeEditor() {
 }
 
 export function OverviewEditor() {
-  const { draft, set, dirty, saving, save, reset } = usePageEditor("overview");
-  // Raw textarea state so blank lines typed mid-edit are preserved;
-  // split(/(\n{2,})/) round-trips losslessly through join("\n\n").
-  const [raw, setRaw] = useState(draft.paragraphs.join("\n\n"));
+  const { value, draft, set, dirty, saving, save, reset } =
+    usePageEditor("overview");
+  // The textarea shows the user's raw text once they start typing
+  // (rawOverride), and derives from the incoming saved content otherwise —
+  // so a slow /api/content response can never leave stale defaults on
+  // screen and blank lines typed mid-edit are preserved losslessly through
+  // split(/(\n{2,})/) + join("\n\n").
+  const [rawOverride, setRawOverride] = useState<string | null>(null);
+  const raw = rawOverride ?? value.paragraphs.join("\n\n");
 
   const handleReset = () => {
     reset();
-    setRaw(DEFAULT_CONTENT.overview.paragraphs.join("\n\n"));
+    // Show (and keep) the shipped defaults in the textarea, matching the
+    // draft reset — publishing after reset restores the original text.
+    setRawOverride(DEFAULT_CONTENT.overview.paragraphs.join("\n\n"));
   };
 
   return (
@@ -157,7 +164,7 @@ export function OverviewEditor() {
         hint="Separate paragraphs with a blank line."
         value={raw}
         onChange={(v) => {
-          setRaw(v);
+          setRawOverride(v);
           set("paragraphs", v.split(/\n{2,}/));
         }}
         rows={14}

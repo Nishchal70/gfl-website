@@ -10,6 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gfl-website.vercel.app"),
   title: "GFL — Global Farming League",
   description:
     "Unlock the ultimate Clash of Clans progression strategy. Join 135+ active clans participating in synchronized farming wars with guaranteed massive loot payouts every 48 hours.",
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: "/assets/gfl-logo.png",
+    apple: "/assets/gfl-logo.png",
   },
   openGraph: {
     title: "GFL — Global Farming League",
@@ -30,6 +32,14 @@ export const metadata: Metadata = {
       "Cooperative Clash of Clans clan war community. 135+ clans, synchronized farming wars, massive loot payouts every 48 hours.",
     siteName: "Global Farming League",
     type: "website",
+    images: [
+      {
+        url: "/assets/gfl-logo.png",
+        width: 1536,
+        height: 1024,
+        alt: "GFL — Global Farming League",
+      },
+    ],
   },
 };
 

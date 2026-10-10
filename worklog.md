@@ -449,3 +449,39 @@ Work Log:
 
 Stage Summary:
 - 3 UI bug fixes committed locally (dashboard mobile tab bar, save bar, tab header); NOT pushed - awaiting user permission per workflow
+
+---
+Task ID: 21-push
+Agent: Main agent (Super Z)
+Task: User authorized push ("push kardo") of Task 21-bugfix3 dashboard fixes
+
+Work Log:
+- Found prior bug-fix commit ddaec14 object CORRUPTED after sandbox restart (git log showed it via stale commit-graph, but object missing from .git/objects) - HEAD e867fd9 intact, working tree clean with all fixes on disk
+- Recovered: git reset --soft ddb2783 (last good pushed commit) -> unstaged 18 QA PNG screenshots (local-only artifacts) -> recommitted code+worklog as d0f26ea with original message
+- Sanity check: localhost:3000 site 200, login API correctly 400s wrong creds; git-credentials intact
+- Pushed: ddb2783..d0f26ea main -> main
+- Live verification (completed this time, no tool glitches): Vercel serving 200; scanned all 10 deployed JS chunks - OLD buggy tab-bar code (flex-nowrap overflow-x-auto) present in 0 chunks, NEW fix code (flex-wrap tab list) present -> deployment of d0f26ea confirmed live
+
+Stage Summary:
+- Dashboard bug fixes (mobile tab bar wrap, compact sticky save bar, stacked tab header) LIVE on gfl-website.vercel.app as commit d0f26ea
+- 18 QA/fix screenshots kept local-only in download/ (not in repo)
+
+---
+Task ID: 22-perfection-sweep
+Agent: Main agent (Super Z)
+Task: User asked "chhote se chhote bugs bhi fix kro, site 100% perfect lagni chahiye" - full-site QA sweep + fixes
+
+Work Log:
+- STATIC: fixed ALL TypeScript errors (src now 100% type-clean, first time) - db.ts isRemoteUrl type predicate + log options cast; site-content.ts mergeContent Record-based incremental construction (runtime identical)
+- BUG (HIGH, data loss race): usePageEditor drafts snapshotted defaults at mount; /api/content resolves AFTER editors mount -> editor fields showed defaults over saved overrides, one "Save & publish" would WIPE stored overrides. FIX: draft follows incoming value until staff actually edits (editedRef). Verified with QA marker injected in SQLite: editor showed override, dirty=false, save roundtrip persisted after real reload
+- BUG (MED, same class): OverviewEditor raw textarea was a mount-time snapshot - stale defaults on screen + typing would revert paragraphs. FIX: derive raw from value until user types (rawOverride state), reset still shows shipped defaults; eslint set-state-in-effect satisfied via derive pattern
+- BUG (LOW, a11y): HomeView + AssistanceView had no <main> landmark (every other page had one). FIX: HomeView wrapped in <main>, AssistanceView section->main. No layout regression (desktop+mobile verified, overflowX false)
+- BUG (LOW): /favicon.ico 404. FIX: generated public/favicon.ico (16/32/48) from gfl-logo.png via scripts/make-favicon.py, serves 200
+- IMPROVEMENT: layout metadata - metadataBase, og:image (gfl-logo.png 1536x1024), apple icon -> WhatsApp/Discord link previews now show image
+- E2E VERIFIED CLEAN: RichText internal link (#base-layouts) navigates SPA correctly; all 8 pages render correct headings; opponents contact icons lazy-load OK (initial BROKEN was pre-viewport lazy); staff login/session/signout; all 10 dashboard tabs render (wrap, no overflow); Account + Team (2 members); save->reload->persist; mobile 390 home/menu/dashboard/opponents zero horizontal overflow; console errors ZERO throughout
+- QA data restored (battle-style override backup), QA marker scripts saved in scripts/
+- eslint + tsc clean on src; screenshots: download/qa2-*.png
+
+Stage Summary:
+- 6 fixes: TS-clean src, editor draft race (data-loss), overview raw sync, main landmarks, favicon, OG metadata
+- Committed locally, awaiting user push authorization per workflow

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSiteContent, useSiteContentUpdater } from "@/components/gfl/site-content-context";
 import { DEFAULT_CONTENT, type PageKey, type SiteContent } from "@/lib/site-content";
@@ -17,6 +17,16 @@ export function usePageEditor<K extends PageKey>(page: K) {
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
+  // The public /api/content fetch resolves after mount, so `value` can switch
+  // from shipped defaults to the stored overrides while the dashboard is
+  // already open. Until the staff member actually edits a field, the draft
+  // must follow the incoming content — otherwise the editors would show
+  // defaults over saved overrides and one "Save & publish" would wipe them.
+  const editedRef = useRef(false);
+  useEffect(() => {
+    if (!editedRef.current) setDraft(value);
+  }, [value]);
+
   const dirty = useMemo(
     () => JSON.stringify(draft) !== JSON.stringify(value),
     [draft, value]
@@ -24,10 +34,16 @@ export function usePageEditor<K extends PageKey>(page: K) {
 
   const set = useCallback(
     <F extends keyof SiteContent[K]>(key: F, v: SiteContent[K][F]) => {
+      editedRef.current = true;
       setDraft((d) => ({ ...d, [key]: v }) as SiteContent[K]);
     },
     []
   );
+
+  const setDraftTracked = useCallback((next: SiteContent[K]) => {
+    editedRef.current = true;
+    setDraft(next);
+  }, []);
 
   const save = useCallback(async () => {
     setSaving(true);
@@ -66,5 +82,5 @@ export function usePageEditor<K extends PageKey>(page: K) {
     setDraft(DEFAULT_CONTENT[page]);
   }, [page]);
 
-  return { value, draft, setDraft, set, dirty, saving, save, reset };
+  return { value, draft, setDraft: setDraftTracked, set, dirty, saving, save, reset };
 }

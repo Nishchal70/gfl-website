@@ -139,7 +139,7 @@ export function BattleStyleView() {
 export function AssistanceView() {
   const assistance = useSiteContent().assistance;
   return (
-    <section className="grid-bg py-20 md:py-24">
+    <main className="grid-bg py-20 md:py-24">
       <div className="max-w-5xl mx-auto px-5">
         <SectionTitle>{assistance.title}</SectionTitle>
         <div className="grid md:grid-cols-2 gap-5">
@@ -156,7 +156,7 @@ export function AssistanceView() {
           ))}
         </div>
       </div>
-    </section>
+    </main>
   );
 }
 

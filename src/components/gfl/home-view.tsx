@@ -210,11 +210,11 @@ function ChatSection() {
 
 export function HomeView({ onNavigate }: { onNavigate: (page: PageId) => void }) {
   return (
-    <>
+    <main>
       <Hero onNavigate={onNavigate} />
       <Stats />
       <About onNavigate={onNavigate} />
       <ChatSection />
-    </>
+    </main>
   );
 }

@@ -326,15 +326,18 @@ export function mergeContent(
   stored?: Record<string, unknown> | null
 ): SiteContent {
   const out = {} as SiteContent;
+  // Incremental construction: write through a loose record, keep the
+  // strict SiteContent type on the return boundary.
+  const mutable = out as unknown as Record<string, Record<string, unknown>>;
   for (const key of PAGE_KEYS) {
     const override =
       stored && typeof stored[key] === "object" && stored[key] !== null
-        ? (stored[key] as object)
+        ? (stored[key] as Record<string, unknown>)
         : {};
-    out[key] = {
-      ...(DEFAULT_CONTENT[key] as object),
+    mutable[key] = {
+      ...(DEFAULT_CONTENT[key] as Record<string, unknown>),
       ...override,
-    } as SiteContent[typeof key];
+    };
   }
   return out;
 }

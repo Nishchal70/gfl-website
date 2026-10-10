@@ -17,7 +17,7 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-function isRemoteUrl(url: string | undefined): boolean {
+function isRemoteUrl(url: string | undefined): url is string {
   return !!url && (url.startsWith("libsql://") || url.startsWith("libsql:"));
 }
 
@@ -40,11 +40,14 @@ function makeClient(): PrismaClient {
   }
 
   // Default: plain Prisma engine over the SQLite file (local development).
-  return new PrismaClient(
+  // Runtime accepts every log level; adapter-augmented typings only model
+  // ["error"], so type the options object once via constructor parameters.
+  const logOptions = (
     process.env.NODE_ENV === "production"
-      ? { log: ["error"] }
-      : { log: ["query"] }
-  );
+      ? { log: ["error" as const] }
+      : { log: ["query" as const] }
+  ) as ConstructorParameters<typeof PrismaClient>[0];
+  return new PrismaClient(logOptions);
 }
 
 export const db = globalForPrisma.prisma ?? makeClient();
