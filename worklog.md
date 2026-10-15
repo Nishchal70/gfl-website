@@ -485,3 +485,20 @@ Work Log:
 Stage Summary:
 - 6 fixes: TS-clean src, editor draft race (data-loss), overview raw sync, main landmarks, favicon, OG metadata
 - Committed locally, awaiting user push authorization per workflow
+
+---
+Task ID: 22-push
+Agent: Main agent (Super Z)
+Task: User authorized push ("push krdo") of Task 22-perfection-sweep fixes
+
+Work Log:
+- Pre-push review: all 6 sweep diffs re-inspected (use-page-editor editedRef draft-follow, OverviewEditor rawOverride derive, main landmarks, layout metadata, db.ts/site-content.ts type-clean refactors) - all sane
+- Squashed snapshot commits: git reset --soft d0f26ea -> unstaged ALL new QA/fix PNGs (16 screenshots incl. fix-*/qa-mobile-*/qa2-*/qa-prod-* accidentally re-added by snapshot commits) - screenshots stay local-only per workflow
+- Gate: npx tsc --noEmit -> src/ 100% clean (only pre-existing errors in sandbox artifacts examples/ + skills/, outside Next.js build)
+- Sanity: localhost site 200, /favicon.ico 200 (was 404), login bad-creds 401
+- Pushed: d0f26ea..5692c90 main -> main
+- Live verification (gfl-website.vercel.app): site 200; /favicon.ico 200 (new-code proof, was 404 pre-5692c90); og:image meta tag present with absolute URL https://gfl-website.vercel.app/assets/gfl-logo.png (metadataBase+OG fix live); login bad-creds 401; /icons/whatsapp.png 200; /api/content 200
+
+Stage Summary:
+- Perfection sweep fixes (editor draft-sync data-loss race, overview raw sync, main landmarks, favicon, OG metadata) LIVE on production as commit 5692c90
+- 16 QA screenshots kept local-only in download/ (0 PNGs in repo diff)
