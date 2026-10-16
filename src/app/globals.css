@@ -646,3 +646,9 @@ h2.display {
       0 0 18px rgba(255, 253, 252, 0.55);
   }
 }
+
+/* Keyboard focus visibility (a11y): red outline on every focusable element */
+:focus-visible {
+  outline: 2px solid var(--gfl-red);
+  outline-offset: 2px;
+}

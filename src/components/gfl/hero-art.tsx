@@ -4,13 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 
 const HERO_IMAGES = [
-  "/assets/gfl-hero-random-1.png",
-  "/assets/gfl-hero-random-2.png",
-  "/assets/gfl-hero-random-3.png",
-  "/assets/gfl-hero-random-4.png",
-  "/assets/gfl-hero-random-5.png",
-  "/assets/gfl-hero-random-6.png",
-  "/assets/gfl-hero-random-7.png",
+  "/assets/gfl-hero-random-1.webp",
+  "/assets/gfl-hero-random-2.webp",
+  "/assets/gfl-hero-random-3.webp",
+  "/assets/gfl-hero-random-4.webp",
+  "/assets/gfl-hero-random-5.webp",
+  "/assets/gfl-hero-random-6.webp",
+  "/assets/gfl-hero-random-7.webp",
 ];
 
 /**

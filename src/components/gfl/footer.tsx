@@ -41,7 +41,7 @@ export function Footer({ onNavigate }: { onNavigate: (p: PageId) => void }) {
         </nav>
       </div>
 
-      <div className="max-w-6xl mx-auto px-5 mt-8 pt-5 border-t border-white/10 flex flex-col md:flex-row justify-between gap-2 text-xs text-stone-500">
+      <div className="max-w-6xl mx-auto px-5 mt-8 pt-5 border-t border-white/10 flex flex-col md:flex-row justify-between gap-2 text-xs text-stone-400">
         <p>© {year} Global Farming League. All rights reserved.</p>
         <p>Fan-made community site · Not affiliated with Supercell.</p>
       </div>

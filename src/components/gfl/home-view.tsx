@@ -133,7 +133,7 @@ function Stats() {
                 <b className="display text-2xl text-red-600 block mt-1">
                   <StatValue value={stat.value} />
                 </b>
-                <div className="text-[10px] font-bold tracking-wide">
+                <div className="text-xs font-bold tracking-wide">
                   {stat.label}
                 </div>
               </div>

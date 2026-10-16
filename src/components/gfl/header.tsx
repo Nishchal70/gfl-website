@@ -32,6 +32,16 @@ export function Header({
     };
   }, []);
 
+  // Escape closes the mobile menu (keyboard accessibility).
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const go = (p: PageId) => {
     onNavigate(p);
     setOpen(false);

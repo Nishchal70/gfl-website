@@ -43,6 +43,18 @@ export const metadata: Metadata = {
   },
 };
 
+// JSON-LD structured data so search engines see the organization entity.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Global Farming League",
+  alternateName: "GFL",
+  url: "https://gfl-website.vercel.app",
+  logo: "https://gfl-website.vercel.app/assets/gfl-logo.png",
+  description:
+    "Clash of Clans farming-war league community. 135+ clans, synchronized farming wars, massive loot payouts every 48 hours.",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,6 +74,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased bg-background text-foreground`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
         <Toaster />
       </body>

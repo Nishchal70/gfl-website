@@ -502,3 +502,23 @@ Work Log:
 Stage Summary:
 - Perfection sweep fixes (editor draft-sync data-loss race, overview raw sync, main landmarks, favicon, OG metadata) LIVE on production as commit 5692c90
 - 16 QA screenshots kept local-only in download/ (0 PNGs in repo diff)
+
+---
+Task ID: 23-audit-crosscheck
+Agent: Main agent (Super Z)
+Task: Cross-check Qwen AI audit report against current codebase, fix genuine findings
+
+Work Log:
+- Qwen audit reported "repo lacks Next.js code, only static index.html" - verified via git ls-tree origin/main: FALSE, full Next.js source present. Qwen audited a stale pre-upgrade clone; findings F1/F2/F5/F9/F12 map to dead prototype code (N/A)
+- Cross-checked all 12 findings against current src/: F5 (router fallthrough), F7 (login labels), F8 (main landmarks), F12 (hash sync) already correct/fixed; F4 metadata already present
+- FIX (F3 perf): 7 hero PNGs (1.6-2.2MB each) -> WebP q82 (70-150KB, 94-96% smaller, same 1536x1024); 3 unreferenced legacy heroes (clan-village/fantasy/loot, ~7MB) deleted; scripts/optimize-heroes.py saved; repo assets 20.7MB -> 0.8MB; hero-art.tsx refs updated to .webp
+- FIX (F11 a11y): mobile menu closes on Escape (header.tsx keydown effect, verified via agent-browser: OPEN -> Escape -> CLOSED)
+- FIX (F10 contrast): footer bottom bar text-stone-500 -> stone-400 (~7:1 on stone-950, passes AA); stat labels text-[10px] -> text-xs (12px)
+- FIX (F6 a11y): global :focus-visible red outline added to globals.css
+- FIX (F4 SEO): JSON-LD Organization schema injected in layout.tsx body
+- Verified: WebP serves 200 via next/image optimizer (w=1920), old PNG 404, hero renders pixel-identical (screenshot), footer color computed lab(66.2...) = stone-400, tsc src clean, eslint changed files clean, 0 console errors
+- Screenshots: download/audit-desktop-home-webp.png, download/audit-stats-footer.png (local-only)
+
+Stage Summary:
+- 6 genuine fixes from external AI audit cross-check: WebP hero optimization (20MB), Escape menu close, footer contrast, stat label size, focus-visible, JSON-LD
+- Committed locally, awaiting push (user authorized in same message)
